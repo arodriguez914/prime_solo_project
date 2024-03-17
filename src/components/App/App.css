@@ -28,7 +28,8 @@ Button
 
 .btn {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px 20px 10px 10px;
+  margin: 10px;
   border-color: #014041;
   border-width: 1px 1px 3px;
   border-radius: 4px;
@@ -109,4 +110,8 @@ Form Treatment
 input {
   margin: 5px;
   margin-bottom: 10px;
+}
+
+button {
+  margin: 5px;
 }
