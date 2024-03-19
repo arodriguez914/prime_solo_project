@@ -63,7 +63,7 @@ function RegisterForm() {
       </div>
       <div>
         <label htmlFor="name">
-          Student Full Name:
+          Your Full Name:
           <input
             type="name"
             name="name"
