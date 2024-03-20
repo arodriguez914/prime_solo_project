@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LogOutButton from "../LogOutButton/LogOutButton";
 import "./Nav.css";
 import { useSelector } from "react-redux";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
 // MUI for Sidebar Testing
 import Grid from "@mui/material/Grid";
@@ -25,13 +24,23 @@ import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import GroupsIcon from "@mui/icons-material/Groups";
 import ManageAccountsRoundedIcon from "@mui/icons-material/ManageAccountsRounded";
 import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const drawerWidth = 240;
 
 function Nav(props) {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  const history = useHistory();
 
+  // function handleClick(i) {
+  //   for (i = 0; i <= 0; i++ ); 
+  //     if (i === 0) {
+  //     history.push("/user");
+  //   } else {
+  //     history.push("/schedule");
+  //   } 
+    
   return (
     <div className="nav">
       <Link to="/home">
@@ -83,16 +92,21 @@ function Nav(props) {
                     "Update Profile",
                   ].map((text, index) => (
                     <ListItem key={text} disablePadding>
-                      <ListItemButton>
+                      <ListItemButton >
                         <ListItemIcon>
+                          <Link to="/user">
                           {index === 0 && <HomeRoundedIcon fontSize="medium" />}
+                          </Link>
+                          <Link to="/schedule">
                           {index === 1 && (
                             <CalendarMonthRoundedIcon fontSize="medium" />
-                          )}
+                          )} </Link>
+                          <Link>
                           {index === 2 && <GroupsIcon fontSize="medium" />}
-                          {index === 3 && (
+                          </Link>
+                          <Link>{index === 3 && (
                             <ManageAccountsRoundedIcon fontSize="medium" />
-                          )}
+                          )}</Link>
                         </ListItemIcon>
                         <ListItemText primary={text} />
                       </ListItemButton>
@@ -101,10 +115,12 @@ function Nav(props) {
                 </List>
                 <Divider />
                 <div className="logOutSidebar">
-                  <List >
-                    {['Log Out'].map((text, index) => (
+                  <List>
+                    {["Log Out"].map((text, index) => (
                       <ListItem key={text} disablePadding>
-                        <ListItemButton onClick={() => dispatch({ type: 'LOGOUT' })}>
+                        <ListItemButton
+                          onClick={() => dispatch({ type: "LOGOUT" })}
+                        >
                           <ListItemIcon>
                             {<ExitToAppRoundedIcon fontSize="medium" />}
                           </ListItemIcon>
@@ -119,25 +135,11 @@ function Nav(props) {
             <Link className="logo" to="/user">
               JC TUTORS
             </Link>
-
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>   
-
           </>
         )}
-
-        {/* <Link className="navLink" to="/about">
-        Tutor Registration
-        </Link> */}
       </div>
     </div>
   );
 }
 
 export default Nav;
-
-
-
-
- 

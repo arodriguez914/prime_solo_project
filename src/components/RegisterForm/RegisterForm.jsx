@@ -6,9 +6,12 @@ function RegisterForm() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [isStudent, setIsStudent] = useState('true');
+  const [isTutor, setIsTutor] = useState('false');
   // const [parentName, setParentName] = useState('');
   // const [parentEmail, setParentEmail] = useState('');
   // const [parentPhone, setParentPhone] = useState('');
+  // const [gradesTaught, setGradesTaught] = useState('');
+  // const [about, setAbout = useState('');
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -22,9 +25,12 @@ function RegisterForm() {
         password: password,
         full_name: name,
         is_student: isStudent,
+        is_student: isTutor
         // parentName: parentName,
         // parentEmail: parentEmail,
         // parentPhone: parentPhone,
+        // gradesTaught: gradesTaught,
+        // about: about,
       },
     });
   }; // end registerUser
@@ -85,10 +91,10 @@ function RegisterForm() {
           >Yes</button> 
           <button
             type="boolean"
-            name="isStudent"
-            value={isStudent}
+            name="isTutor"
+            value={isTutor}
             required
-            onChange={(event) => setIsStudent(event.target.value)}
+            onChange={(event) => setIsTutor(event.target.value)}
           >No</button> 
         </label>
       </div>
@@ -128,6 +134,30 @@ function RegisterForm() {
           />
         </label>
       </div> */}
+       {/* <div>
+        <label htmlFor="gradesTaught">
+          Grades Qualified
+          <input
+            type="gradesTaught"
+            name="gradesTaught"
+            value={gradesTaught}
+            required
+            onChange={(event) => setGradesTaught(event.target.value)}
+          />
+        </label>
+      </div> 
+      <div>
+        <label htmlFor="about">
+          About You
+          <input
+            type="about"
+            name="about"
+            value={about}
+            required
+            onChange={(event) => setAbout(event.target.value)}
+          />
+        </label>
+      </div>  */}
       <div>
         <input className="btn" type="submit" name="submit" value="Register" />
       </div>
