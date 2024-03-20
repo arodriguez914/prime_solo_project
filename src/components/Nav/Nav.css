@@ -40,3 +40,15 @@
 .navLink:hover {
   background-color: #008183;
 }
+
+.logo {
+  display: inline-flex;
+  color: #f2f2f2;
+  background-color: #00acb0;
+  text-align: center;
+  padding: 24px 10px;
+  text-decoration: none;
+  font-size: 40px;
+  font-family: cursive;
+  font-variant: small-caps	
+}

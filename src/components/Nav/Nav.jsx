@@ -116,8 +116,8 @@ function Nav(props) {
                 </div>
               </Drawer>
             </Box>
-            <Link className="navLink" to="/user">
-              Home
+            <Link className="logo" to="/user">
+              JC TUTORS
             </Link>
 
             <Link className="navLink" to="/info">
