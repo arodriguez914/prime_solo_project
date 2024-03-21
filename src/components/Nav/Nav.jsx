@@ -5,19 +5,16 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 // MUI for Sidebar Testing
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
@@ -33,14 +30,6 @@ function Nav(props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // function handleClick(i) {
-  //   for (i = 0; i <= 0; i++ ); 
-  //     if (i === 0) {
-  //     history.push("/user");
-  //   } else {
-  //     history.push("/schedule");
-  //   } 
-    
   return (
     <div className="nav">
       <Link to="/home">
@@ -85,49 +74,43 @@ function Nav(props) {
                 </div>
                 <Divider />
                 <List>
-                  {[
-                    "Home",
-                    "Schedule",
-                    "Meet The Tutors",
-                    "Update Profile",
-                  ].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                      <ListItemButton >
-                        <ListItemIcon>
-                          <Link to="/user">
-                          {index === 0 && <HomeRoundedIcon fontSize="medium" />}
-                          </Link>
-                          <Link to="/schedule">
-                          {index === 1 && (
-                            <CalendarMonthRoundedIcon fontSize="medium" />
-                          )} </Link>
-                          <Link>
-                          {index === 2 && <GroupsIcon fontSize="medium" />}
-                          </Link>
-                          <Link>{index === 3 && (
-                            <ManageAccountsRoundedIcon fontSize="medium" />
-                          )}</Link>
-                        </ListItemIcon>
-                        <ListItemText primary={text} />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
+                  <ListItemButton onClick={() => history.push("/user")}>
+                    <ListItemIcon>
+                      {<HomeRoundedIcon fontSize="medium" />}
+                    </ListItemIcon>
+                    <ListItem>Home</ListItem>
+                  </ListItemButton>
+
+                  <ListItemButton onClick={() => history.push("/schedule")}>
+                    <ListItemIcon>
+                      {<CalendarMonthRoundedIcon fontSize="medium" />}
+                    </ListItemIcon>
+                    <ListItem>Schedule</ListItem>
+                  </ListItemButton>
+
+                  <ListItemButton onClick={() => history.push("/user")}>
+                    <ListItemIcon>
+                      {<GroupsIcon fontSize="medium" />}
+                    </ListItemIcon>
+                    <ListItem>Meet The Tutors</ListItem>
+                  </ListItemButton>
+
+                  <ListItemButton onClick={() => history.push("/user")}>
+                    <ListItemIcon>
+                      {<ManageAccountsRoundedIcon fontSize="medium" />}
+                    </ListItemIcon>
+                    <ListItem>Update Profile</ListItem>
+                  </ListItemButton>
                 </List>
                 <Divider />
                 <div className="logOutSidebar">
                   <List>
-                    {["Log Out"].map((text, index) => (
-                      <ListItem key={text} disablePadding>
-                        <ListItemButton
-                          onClick={() => dispatch({ type: "LOGOUT" })}
-                        >
-                          <ListItemIcon>
-                            {<ExitToAppRoundedIcon fontSize="medium" />}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItemButton>
-                      </ListItem>
-                    ))}
+                    <ListItemButton onClick={() => dispatch({ type: "LOGOUT" })}>
+                    <ListItemIcon>
+                      {<ExitToAppRoundedIcon fontSize="medium" />}
+                    </ListItemIcon>
+                    <ListItem>Log Out</ListItem>
+                  </ListItemButton>
                   </List>
                 </div>
               </Drawer>
