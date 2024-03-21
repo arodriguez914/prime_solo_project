@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function RegisterForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [isStudent, setIsStudent] = useState('true');
-  const [isTutor, setIsTutor] = useState('false');
-  // const [parentName, setParentName] = useState('');
-  // const [parentEmail, setParentEmail] = useState('');
-  // const [parentPhone, setParentPhone] = useState('');
-  // const [gradesTaught, setGradesTaught] = useState('');
-  // const [about, setAbout = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [isStudent, setIsStudent] = useState(true);
+  const [parentName, setParentName] = useState('');
+  const [parentEmail, setParentEmail] = useState('');
+  const [parentPhone, setParentPhone] = useState('');
+  const [gradesTaught, setGradesTaught] = useState('');
+  const [about, setAbout] = useState('');
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -19,18 +18,17 @@ function RegisterForm() {
     event.preventDefault();
 
     dispatch({
-      type: 'REGISTER',
+      type: "REGISTER",
       payload: {
         username: username,
         password: password,
         full_name: name,
         is_student: isStudent,
-        is_student: isTutor
-        // parentName: parentName,
-        // parentEmail: parentEmail,
-        // parentPhone: parentPhone,
-        // gradesTaught: gradesTaught,
-        // about: about,
+        parentName: parentName,
+        parentEmail: parentEmail,
+        parentPhone: parentPhone,
+        gradesTaught: gradesTaught,
+        about: about,
       },
     });
   }; // end registerUser
@@ -79,26 +77,31 @@ function RegisterForm() {
           />
         </label>
       </div>
+
       <div>
         <label htmlFor="isStudent">
           Are you A Student?
           <button
-            type="boolean"
+            type="button"
             name="isStudent"
-            value={isStudent}
             required
-            onChange={(event) => setIsStudent(event.target.value)}
-          >Yes</button> 
+            onClick={(event) => setIsStudent(true)}
+          >
+            Yes
+          </button>
+          {/* <div> change buttons to radio inputs */}
           <button
-            type="boolean"
+            type="button"
             name="isTutor"
-            value={isTutor}
             required
-            onChange={(event) => setIsTutor(event.target.value)}
-          >No</button> 
+            onClick={(event) => setIsStudent(false)}
+          >
+            No
+          </button>
         </label>
       </div>
-      {/* <div>
+      {isStudent ? <div>
+       <div> 
         <label htmlFor="parentName">
           Parent's Name:
           <input
@@ -121,7 +124,7 @@ function RegisterForm() {
             onChange={(event) => setParentEmail(event.target.value)}
           />
         </label>
-      </div>
+      </div> 
       <div>
         <label htmlFor="parentPhone">
           Parent's Phone Number:
@@ -133,8 +136,11 @@ function RegisterForm() {
             onChange={(event) => setParentPhone(event.target.value)}
           />
         </label>
-      </div> */}
-       {/* <div>
+      </div> 
+      
+      </div> : <div>
+
+      <div>
         <label htmlFor="gradesTaught">
           Grades Qualified
           <input
@@ -157,10 +163,12 @@ function RegisterForm() {
             onChange={(event) => setAbout(event.target.value)}
           />
         </label>
-      </div>  */}
+      </div> 
       <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
       </div>
+      </div>
+}
+    <input className="btn" type="submit" name="submit" value="Register" />  
     </form>
   );
 }
