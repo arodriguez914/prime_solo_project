@@ -3,18 +3,26 @@ import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
-// This is one of our simplest components
-// It doesn't have local state
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
+import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 
 function SchedulePage() {
+  const handleDateClick = (arg) => {
+    alert(arg.dateStr);
+  };
+
   return (
-    <Grid container spacing={2} paddingLeft={"20%"}>
-      <div className="sched-heading">
-         Teacher Subject
-      </div>
-    </Grid>
+    <div className="sched-heading">
+      <Grid >
+        Teacher Subject
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          dateClick={handleDateClick}
+        />
+      </Grid>
+    </div>
   );
 }
 

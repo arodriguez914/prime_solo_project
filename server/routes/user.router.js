@@ -20,15 +20,19 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
-  const { full_name, is_student} = req.body;
+  const { full_name, is_student, img, name, parent_name, parent_email, parent_number, comments, user_id} = req.body;
 
   const queryText = `INSERT INTO "user" ("username", "password", "full_name", "is_student")
     VALUES ($1, $2, $3, $4) RETURNING id`;
+
+  const queryStudent = `INSERT INTO "student" ("img", "name", "parent_name", "parent_email", "parent_number", "comments", "user_id")
+    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`;
+
   pool
     .query(queryText, [username, password, full_name, is_student])
     .then((response) => {
-      // pool.query().then().catch()
-      res.sendStatus(201)})
+      pool.query(queryStudent, [img, name, parent_name, parent_email, parent_number, comments, user_id]).then(response).catch(res.sendStatus(500))
+      })
     .catch((err) => {
       console.log('User registration failed: ', err);
       res.sendStatus(500);
