@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 // MUI for Sidebar Testing
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,8 +14,10 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
+import Typography  from "@mui/material/styles/createTypography";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
@@ -105,6 +108,7 @@ function Nav(props) {
                 <Divider />
                 <div className="logOutSidebar">
                   <List>
+                  
                     <ListItemButton onClick={() => dispatch({ type: "LOGOUT" })}>
                     <ListItemIcon>
                       {<ExitToAppRoundedIcon fontSize="medium" />}

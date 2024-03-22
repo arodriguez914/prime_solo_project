@@ -1,13 +1,26 @@
 import React from "react";
 import LoginForm from "../LoginForm/LoginForm";
+import tutor from "../../../public/tutor.jpg";
 import { useHistory } from "react-router-dom";
+
+import { Box } from "@mui/material";
 
 function LoginPage() {
   const history = useHistory();
 
   return (
-    <div>
-      <LoginForm />
+    <div className="loginBackground">
+
+      
+      <Box
+        class="tutor"
+        style={{
+          backgroundImage: `url(${tutor})`,
+          backgroundSize: "cover",
+          height: "100vh",
+          color: "#f5f5f5",
+        }}
+      ><LoginForm /></Box>
 
       <center>
         <button
