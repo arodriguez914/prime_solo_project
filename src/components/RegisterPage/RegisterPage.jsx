@@ -1,33 +1,36 @@
-import React from 'react';
+import React from "react";
 
-import { useHistory } from 'react-router-dom';
-import RegisterForm from '../RegisterForm/RegisterForm';
+import { useHistory } from "react-router-dom";
+import RegisterForm from "../RegisterForm/RegisterForm";
 import passion from "../../../public/passion.jpg";
 
-import {Box}  from '@mui/material';
+import { Box } from "@mui/material";
 
 function RegisterPage() {
   const history = useHistory();
 
   return (
     <div>
-
       <Box
-        class="passion"
+        className="passion"
         style={{
           backgroundImage: `url(${passion})`,
-          backgroundSize: "cover",
-          height: "100vh",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "right",
+          backgroundSize: "contain",
+          height: "80vh",
           color: "#f5f5f5",
         }}
-      ><RegisterForm /></Box>
+      >
+        <RegisterForm />
+      </Box>
 
       <center>
         <button
           type="button"
           className="btn btn_asLink"
           onClick={() => {
-            history.push('/login');
+            history.push("/login");
           }}
         >
           Already Registered? Login Here!

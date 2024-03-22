@@ -19,7 +19,6 @@ function RegisterForm() {
   const [parentPhone, setParentPhone] = useState("");
   const [gradesTaught, setGradesTaught] = useState("");
   const [about, setAbout] = useState("");
-  const [selectedValue, setSelectedValue] = React.useState("a");
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -43,7 +42,7 @@ function RegisterForm() {
   }; // end registerUser
 
   return (
-    <form className="formPanel" onSubmit={registerUser}>
+    <form className="registerFormPanel" onSubmit={registerUser}>
       <h2>Register User</h2>
       {errors.registrationMessage && (
         <h3 className="alert" role="alert">

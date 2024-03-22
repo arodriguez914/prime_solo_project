@@ -14,6 +14,12 @@ img {
   max-width: 100%;
 }
 
+footer {
+  background-color: darkslateblue;
+  margin: 0;
+  color: #efefef;
+}
+
 /* --------------------------------------------------------------------------------
 Container
 -------------------------------------------------------------------------------- */
@@ -105,6 +111,24 @@ Form Treatment
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.0);
 
+}
+
+.registerFormPanel {
+  box-sizing: border-box;
+  color: black;
+  width: 500px;
+  max-width: 100%;
+  padding: 40px;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgb(0, 0, 0, 0.0);
+}
+
+.passion {
+  margin: 0px
+}
+
+.registerFormPanel {
+  width: 50%;
 }
 
 input {

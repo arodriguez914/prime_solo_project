@@ -13,7 +13,7 @@ function LoginPage() {
 
       
       <Box
-        class="tutor"
+        className="tutor"
         style={{
           backgroundImage: `url(${tutor})`,
           backgroundSize: "cover",
