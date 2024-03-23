@@ -19,8 +19,10 @@ import SchedulePage from '../SchedulePage/SchedulePage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import UpdateProfilePage from '../UpdateProfilePage/UpdateProfilePage';
 
 import './App.css';
+import TutorsPage from '../TutorsPage/TutorsPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -61,11 +63,27 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
+            // logged in shows SchedulePage else shows LoginPage
             exact
             path="/schedule"
           >
             <SchedulePage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows TutorPage else shows LoginPage
+            exact
+            path="/tutors"
+          >
+            <TutorsPage/>
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows UpdateProfilePage else shows LoginPage
+            exact
+            path="/profile"
+          >
+            <UpdateProfilePage />
           </ProtectedRoute>
 
           <Route

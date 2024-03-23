@@ -91,14 +91,14 @@ function Nav(props) {
                     <ListItem>Schedule</ListItem>
                   </ListItemButton>
 
-                  <ListItemButton onClick={() => history.push("/user")}>
+                  <ListItemButton onClick={() => history.push("/tutors")}>
                     <ListItemIcon>
                       {<GroupsIcon fontSize="medium" />}
                     </ListItemIcon>
                     <ListItem>Meet The Tutors</ListItem>
                   </ListItemButton>
 
-                  <ListItemButton onClick={() => history.push("/user")}>
+                  <ListItemButton onClick={() => history.push("/profile")}>
                     <ListItemIcon>
                       {<ManageAccountsRoundedIcon fontSize="medium" />}
                     </ListItemIcon>
