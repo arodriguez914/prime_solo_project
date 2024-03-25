@@ -127,6 +127,9 @@ router.post('/register', (req, res, next) => {
   const queryStudent = `INSERT INTO "student" ("parent_name", "parent_email", "parent_number", "user_id")
     VALUES ($1, $2, $3, $4) RETURNING id`;
 
+  const queryTutor = `INSERT INTO "tutor" ("grades_taught", "about")
+    VALUES ($1, $2) RETURNING id`;
+
   pool
     .query(queryText, [username, password, full_name, is_student])
     .then((response) => {

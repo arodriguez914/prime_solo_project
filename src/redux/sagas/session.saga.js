@@ -14,3 +14,9 @@ export function* fetchAllSessions() {
     console.log('fetchAllSessions error:', error);
   }
 }
+
+function* sessionSaga() {
+    yield takeLatest('FETCH_SESSION', fetchAllSessions);
+  }
+
+  export default sessionSaga;

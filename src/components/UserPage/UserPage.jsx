@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
+  const session = useSelector((store) => store.session)
   return (
     <Grid container spacing={2} paddingLeft={"22%"} paddingRight={"5%"} alignItems="center">
       <div className="container">
@@ -23,7 +24,7 @@ function UserPage() {
             backgroundColor: "lightgrey",
           }}
         >
-          <h3>{user.username}</h3>
+          <h3>{session.date}</h3>
         </Box>
       </Grid>
       <Grid item xs={6}>
