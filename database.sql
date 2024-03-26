@@ -24,7 +24,7 @@ CREATE TABLE "student" (
   "name" VARCHAR(120) NOT NULL,
   "parent_name" VARCHAR(120) NOT NULL,
   "parent_email" VARCHAR(120) NOT NULL,
-  "parent_number" INT NOT NULL,
+  "parent_number" VARCHAR NOT NULL,
   "comments" VARCHAR(1000),
   "user_id" INT REFERENCES "user"
 );
