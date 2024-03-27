@@ -6,6 +6,7 @@ const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
 
+
 const router = express.Router();
 
 // Handles Ajax request for user information if user is authenticated
@@ -65,7 +66,31 @@ router.post('/register', (req, res, next) => {
   })
 })
 
+router.put('/update/:id', (req, res, next) => {
+  const { img, full_name, is_student, parentName, parentEmail, parentPhone, gradesTaught, about, comments, user_id} = req.body
+  let profileId = req.params.id;
+  console.log(req.body);
 
+  const queryText = `UPDATE "user" 
+    SET "full_name" = ($1) WHERE "id" = ($2);`;
+
+  const queryStudent = `UPDATE "student" ("img", "name", "parent_name", "parent_email", "parent_number", "comments")
+    VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
+
+  const queryTutor = `UPDATE "tutor" ("img", "full_name", "grades_taught", "about")
+    VALUES ($1, $2, $3, $4) RETURNING id`;
+
+  pool
+    .query(queryText, [full_name, profileId])
+     .then((response) => {
+        console.log('Response 1:', response);
+        res.send(response.rows)
+     })
+        .catch((err) => {
+      console.log('User update failed: ', err);
+      res.sendStatus(500);
+    });
+  })
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route

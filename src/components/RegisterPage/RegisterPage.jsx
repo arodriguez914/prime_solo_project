@@ -17,7 +17,7 @@ function RegisterPage() {
           backgroundImage: `url(${passion})`,
           backgroundRepeat: "no-repeat",
           backgroundPosition: "right",
-          backgroundSize: "contain",
+          backgroundSize: "60% 100%",
           height: "80vh",
           color: "#f5f5f5",
         }}

@@ -1,95 +1,64 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function UpdateProfilePage() {
+  const [comments, setComments] = useState("");
+  const [img, setImg] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [isStudent, setIsStudent] = useState(true);
+  const [parentName, setParentName] = useState("");
+  const [parentEmail, setParentEmail] = useState("");
+  const [parentPhone, setParentPhone] = useState("");
+  const [gradesTaught, setGradesTaught] = useState("");
+  const [about, setAbout] = useState("");
+  const errors = useSelector((store) => store.errors);
+  const profile = useSelector((store) => store.profile);
   const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+
+  const updateUser = (event) => {
+    event.preventDefault();
+
+    dispatch({
+      type: "UPDATE",
+      payload: {
+        img: img,
+        full_name: name,
+        parentName: parentName,
+        parentEmail: parentEmail,
+        parentPhone: parentPhone,
+        comments: comments,
+        gradesTaught: gradesTaught,
+        about: about,
+      },
+    });
+  }; // end updateUser
 
   return (
-    // <form className="updateFormPanel">
-    //   <div>
-        <h2 form className="updateFormPanel">Update Profile Page</h2>
-        /* {!user.isStudent ? (
-          <div>
-            <div>
-              <div>
-                <label htmlFor="name">
-                  Your Full Name:
-                  <input
-                    type="name"
-                    name="name"
-                    value={name}
-                    required
-                    onChange={(event) => setName(event.target.value)}
-                  />
-                </label>
-              </div>
-              <label htmlFor="parentName">
-                Parent's Name:
-                <input
-                  type="parentName"
-                  name="parentName"
-                  value={parentName}
-                  required
-                  onChange={(event) => setParentName(event.target.value)}
-                />
-              </label>
-            </div>
-            <div>
-              <label htmlFor="parentEmail">
-                Parent's Email Address:
-                <input
-                  type="parentEmail"
-                  name="parentEmail"
-                  value={parentEmail}
-                  required
-                  onChange={(event) => setParentEmail(event.target.value)}
-                />
-              </label>
-            </div>
-            <div>
-              <label htmlFor="parentPhone">
-                Parent's Phone Number:
-                <input
-                  type="parentPhone"
-                  name="parentPhone"
-                  value={parentPhone}
-                  required
-                  onChange={(event) => setParentPhone(event.target.value)}
-                />
-              </label>
-            </div>
-          </div>
-        ) : (
-          <div>
-            <div>
-              <label htmlFor="gradesTaught">
-                Grades Qualified
-                <input
-                  type="gradesTaught"
-                  name="gradesTaught"
-                  value={gradesTaught}
-                  required
-                  onChange={(event) => setGradesTaught(event.target.value)}
-                />
-              </label>
-            </div>
-            <div>
-              <label htmlFor="about">
-                About You
-                <input
-                  type="about"
-                  name="about"
-                  value={about}
-                  required
-                  onChange={(event) => setAbout(event.target.value)}
-                />
-              </label>
-            </div>
-          </div>
-        )}
-        <input className="btn" type="submit" name="submit" value="Register" />
+    <form className="updateFormPanel" onSubmit={updateUser}>
+      <div>
+        <h2 form className="updateFormPanel">
+          Update Profile Page
+        </h2>
+        <div>
+          <label htmlFor="name">
+            Your Full Name:
+            <input type="name" name="name" placeholder={user.full_name} required onChange={(event) => {
+            setName(event.target.value);
+          }}/>
+          </label>
+        </div>
+
+        <input
+          className="btn"
+          type="submit"
+          name="submit"
+          value="Update Profile"
+        />
       </div>
-    </form> */
+    </form>
   );
 }
 

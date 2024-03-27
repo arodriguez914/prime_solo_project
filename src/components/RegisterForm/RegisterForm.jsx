@@ -37,10 +37,11 @@ function RegisterForm() {
         parentPhone: parentPhone,
         gradesTaught: gradesTaught,
         about: about,
-      },
-    });
+      }    
+  });
   }; // end registerUser
 
+  
   return (
     <form className="registerFormPanel" onSubmit={registerUser}>
       <h2>Register User</h2>
@@ -180,7 +181,7 @@ function RegisterForm() {
         </div>
       )}
       <input className="btn" type="submit" name="submit" value="Register" />
-    </form>
+    </form >
   );
 }
 
