@@ -21,7 +21,17 @@ router.get('/', (req, res) => {
  * POST route template
  */
 router.post('/', (req, res) => {
-  // POST route code here
+    const newSession = req.body;
+    const queryText = `INSERT INTO "session" ("date", "time", "duration")
+        VALUES ($1, $2, $3);`;
+    pool.query(queryText, [newSession.date, newSession.time, newSession.duration])
+        .then((result) => {
+            res.sendStatus(201);
+        })
+        .catch((err) => {
+            console.log(`Error making query ${queryText}`, err);
+            res.sendStatus(500);
+        });
 });
 
 router.delete('/:id', (req, res) => {

@@ -33,9 +33,9 @@ function App() {
     dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch({ type: 'FETCH_SESSION' });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch({ type: 'GET_SESSION' });
+  // }, [dispatch]);
 
 
   return (
