@@ -21,7 +21,7 @@ function SchedulePage() {
   const handleDateClick = (arg) => {
     alert(arg.dateStr);
   };
-
+  // CREATE DISPATCH HERE TO CREATE EVENTS
   const handleChange = (event) => {
     setTutor(event.target.value);
     setSubject(event.target.value);
@@ -29,7 +29,7 @@ function SchedulePage() {
 
   // placeholder text for tutor and subject
   const [tutor, setTutor] = useState(["Mrs. Collins"]);
-  const [subject, setSubject] = useState(["Geometry", "English", "History"]);
+  const subject = useSelector((store) => store.subject);
 
   return (
     <div className="sched-heading">
@@ -53,7 +53,7 @@ function SchedulePage() {
             </Select>
           </FormControl>
 
-          <FormControl required sx={{ m: 1, minWidth: 200}}>
+          <FormControl required sx={{ m: 1, minWidth: 200 }}>
             <InputLabel id="demo-simple-select-required-label">
               Subject
             </InputLabel>
@@ -67,9 +67,7 @@ function SchedulePage() {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={subject}>Geometry</MenuItem>
-              <MenuItem value={subject}>English</MenuItem>
-              <MenuItem value={subject}>History</MenuItem>
+              <MenuItem value={subject}>{subject.id}</MenuItem>
             </Select>
           </FormControl>
         </div>

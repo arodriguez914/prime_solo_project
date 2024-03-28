@@ -4,6 +4,7 @@ import user from './user.reducer';
 import session from './session.reducer';
 import { tutorDetails } from './tutordetails.reducer';
 import { tutors } from './tutor.reducer';
+import subject from './subject.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   session,//allows access to session id and info needed for calendar setup
   tutors,
   tutorDetails,
+  subject,
 });
 
 export default rootReducer;

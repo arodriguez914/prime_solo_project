@@ -5,14 +5,14 @@ import { useHistory } from 'react-router-dom';
 function TutorsPage() {
     const dispatch = useDispatch();
   const history = useHistory();
-  const movies = useSelector((store) => store.movies);
+  const tutors = useSelector((store) => store.tutors);
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_MOVIES' });
+    dispatch({ type: 'FETCH_TUTORS' });
   }, []);
 
-  const clickMovieDetailsHandler = (id) => (event) => {
-    history.push(`/movie/${id}`);
+  const clickTutorDetailsHandler = (id) => (event) => {
+    history.push(`/tutors/${id}`);
   };
 
   return (
@@ -20,19 +20,19 @@ function TutorsPage() {
       <div>
         <h2 form className="updateFormPanel">Meet The Tutors Page</h2>
         </div>
-      <section className="movies">
-        {movies &&
-          movies.map((movie) => {
+        {/* <section className="tutors">
+        {tutors &&
+          tutors.map((tutor) => {
             return (
-              <div data-testid="movieItem" key={movie.id}>
-                <h3>{movie.title}</h3>
-                <button onClick={clickMovieDetailsHandler(movie.id)}>
+              <div data-testid="tutorItem" key={tutor.id}>
+                <h3>{tutor.title}</h3>
+                <button onClick={clickTutorDetailsHandler(tutor.id)}>
                   DETAILS
                 </button>
               </div>
             );
           })}
-      </section>
+      </section> */}
     </div>
   )
 }
