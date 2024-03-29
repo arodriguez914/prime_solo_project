@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 function TutorsDetails() {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const tutorDetails = useSelector((store) => store.tutors);
+    const tutorDetails = useSelector((store) => store.tutorDetails);
   
     useEffect(() => {
       dispatch({ type: 'FETCH_TUTOR_DETAILS', payload: { id } });
@@ -13,24 +13,13 @@ function TutorsDetails() {
   
     return (
         
-      <div>
-        <div>
-        <h2 form className="updateFormPanel">{tutorDetails.full_name}</h2>
-        </div>
-        {tutorDetails ? (
+      <div className="updateFormPanel">
+        <h2 >{tutorDetails.full_name}</h2>
+        <h4>{tutorDetails.grades_taught}</h4>
           <section>
-            <img src="{tutorDetails.img}" alt="" />
-            <h2>{tutorDetails.full_name}</h2>
-            <p>{tutorDetails.grades_taught}</p>
             ABOUT:
             <p>{tutorDetails.about}</p>
           </section>
-        ) : (
-          <section>
-            <h2>Tutor Details</h2>
-            <p>No Tutor Details Available</p>
-          </section>
-        )}
       </div>
   )
 }
