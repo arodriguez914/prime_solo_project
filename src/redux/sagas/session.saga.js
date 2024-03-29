@@ -41,7 +41,7 @@ function* postSessionSaga(action) {
       // code to try running HERE
       const sessionResponse = yield axios({
         method: 'PUT',
-        url: '/api/session${id}',
+        url: `/api/session${action.payload.id}`,
         data: { id: action.payload },
       });
       yield put({ type: 'GET_SESSION', payload: sessionResponse.data });
@@ -57,7 +57,7 @@ function* deleteSessionSaga(action) {
       // DELETE a session
       yield axios({
         method: 'DELETE',
-        url: '/api/session/${id}',
+        url: `/api/session/${action.payload.id}`,
         data: { id: action.payload },
       });
       // dispatch to refresh GET

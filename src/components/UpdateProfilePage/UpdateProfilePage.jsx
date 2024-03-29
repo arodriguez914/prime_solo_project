@@ -34,108 +34,104 @@ function UpdateProfilePage() {
   }; // end updateUser
 
   return (
-    
     <form className="updateFormPanel" onSubmit={updateUser}>
       <div>
-
         <h2 form className="updateFormPanel">
           Update Profile Page
         </h2>
         <div>
           <label htmlFor="name">
             Your Full Name:
-            <input type="name" name="name" placeholder={user.full_name} required onChange={(event) => {
-            setName(event.target.value);
-          }}/>
+            <input
+              type="name"
+              name="name"
+              placeholder={user.full_name}
+              required
+              onChange={(event) => {
+                setName(event.target.value);
+              }}
+            />
           </label>
         </div>
-       
-        <div>
-            <label htmlFor="parentName">
-              Parent's Name:
-              <input
-                type="parentName"
-                name="parentName"
-                placeholder={user.parentName}
-                required
-                onChange={(event) => setParentName(event.target.value)}
-              />
-            </label>
-          </div>
-          {/* <div>
-            <label htmlFor="parentEmail">
-              Parent's Email Address:
-              <input
-                type="parentEmail"
-                name="parentEmail"
-                 // placeholder={user.parentEmail}
-                required
-                onChange={(event) => setParentEmail(event.target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="parentPhone">
-              Parent's Phone Number:
-              <input
-                type="parentPhone"
-                name="parentPhone"
-                // placeholder={user.parentPhone}
-                required
-                onChange={(event) => setParentPhone(event.target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="parentPhone">
-              Parent's Phone Number:
-              <input
-                type="parentPhone"
-                name="parentPhone"
-                // placeholder={user.comments}
-                required
-                onChange={(event) => setParentPhone(event.target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="comments">  
-            Comments/Additional Informational for Tutor
-              <input
-                type="comments"
-                name="comments"
-                // placeholder={user.gradesTaught}
-                required
-                onChange={(event) => setComments(event.target.value)}
-              />
-            </label>
-          </div>
-          
-          <div>
-            <label htmlFor="gradesTaught">  
-            Grades Taught
-              <input
-                type="gradesTaught"
-                name="gradesTaught"
-                // placeholder={user.gradesTaught}
-                required
-                onChange={(event) => setGradesTaught(event.target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="about">
-              About You
-              <input
-                type="about"
-                name="about"
-                // placeholder={user.about}
-                required
-                onChange={(event) => setAbout(event.target.value)}
-              />
-            </label>
-          </div>  */}
-
+        {user.is_student ? (
+          <>
+            <div>
+              <label htmlFor="parentName">
+                Parent's Name:
+                <input
+                  type="parentName"
+                  name="parentName"
+                  //   placeholder
+                  required
+                  onChange={(event) => setParentName(event.target.value)}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="parentEmail">
+                Parent's Email Address:
+                <input
+                  type="parentEmail"
+                  name="parentEmail"
+                  // placeholder={user.parentEmail}
+                  required
+                  onChange={(event) => setParentEmail(event.target.value)}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="parentPhone">
+                Parent's Phone Number:
+                <input
+                  type="parentPhone"
+                  name="parentPhone"
+                  // placeholder={user.comments}
+                  required
+                  onChange={(event) => setParentPhone(event.target.value)}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="comments">
+                Comments/Additional Informational for Tutor
+                <input
+                  type="comments"
+                  name="comments"
+                  // placeholder={user.gradesTaught}
+                  required
+                  onChange={(event) => setComments(event.target.value)}
+                />
+              </label>
+            </div>
+          </>
+        ) : (
+          <>
+            <div>
+              <label htmlFor="gradesTaught">
+                Grades Taught
+                <input
+                  type="gradesTaught"
+                  name="gradesTaught"
+                  // placeholder={user.gradesTaught}
+                  required
+                  onChange={(event) => setGradesTaught(event.target.value)}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="about">
+                About You
+                <input
+                  type="about"
+                  name="about"
+                  // placeholder={user.about}
+                  required
+                  onChange={(event) => setAbout(event.target.value)}
+                />
+              </label>
+            </div>
+          </>
+        )}
         <input
           className="btn"
           type="submit"

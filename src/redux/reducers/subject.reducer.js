@@ -2,7 +2,7 @@ const subjectReducer = (state = [], action) => {
     switch (action.type) {
       case 'SET_SUBJECT':
         return action.payload;
-      case 'UNSETUBJECT':
+      case 'UNSET_SUBJECT':
         return {};
       default:
         return state;

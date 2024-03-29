@@ -3,7 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 /**
- * GET route template
+ * GET route template set up by id
  */
 router.get('/', (req, res) => {
     console.log('GET /api/session');
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
       });
   });
 /**
- * POST route template
+ * POST route template 
  */
 router.post('/', (req, res) => {
     const newSession = req.body;

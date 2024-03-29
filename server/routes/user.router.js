@@ -75,23 +75,28 @@ router.put('/update/:id', (req, res, next) => {
   const queryText = `UPDATE "user" 
     SET "full_name" = ($1) WHERE "id" = ($2);`;
 
-  const queryStudent = `UPDATE "student" ("img", "name", "parent_name", "parent_email", "parent_number", "comments")
-    VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
+  const queryStudent = `UPDATE "student" 
+    SET "name" = ($1), "parent_name" = ($2), "parent_email" = ($3), "parent_number" = ($4), "comments" = ($5),  WHERE "id" = ($6);`;
 
-  const queryTutor = `UPDATE "tutor" ("img", "full_name", "grades_taught", "about")
-    VALUES ($1, $2, $3, $4) RETURNING id`;
+  const queryTutor = `UPDATE "tutor" 
+    SET "full_name" = ($1), "grades_taught" = ($2), "about" = ($3) WHERE "id" = ($4);`;
 
   pool
-    .query(queryText, [full_name, profileId])
-     .then((response) => {
-        console.log('Response 1:', response);
-        res.send(response.rows)
-     })
-        .catch((err) => {
-      console.log('User update failed: ', err);
-      res.sendStatus(500);
-    });
+  .query(queryText,[full_name, profileId])
+   .then((response) => {
+      is_student && (
+      pool.query(queryStudent, [full_name, parentName, parentEmail, parentPhone, comments, profileId]).then((response) => {
+      console.log('Response 2:', response)}).catch(res.sendStatus(500)))
+
+      !is_student && (
+      pool.query(queryTutor, [full_name, gradesTaught, about, profileId]).then((response) => {
+        console.log('Response 3:', response)}).catch(res.sendStatus(500)))         
+  .catch((err) => {
+    console.log('User update failed: ', err);
+    res.sendStatus(500);
   })
+})
+})
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route

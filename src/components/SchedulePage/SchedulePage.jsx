@@ -21,7 +21,7 @@ function SchedulePage() {
   const handleDateClick = (arg) => {
     alert(arg.dateStr);
   };
-  // CREATE DISPATCH HERE TO CREATE EVENTS
+  // CREATE DISPATCH HERE TO CREATE EVENTS ... snackbar .. modal
   const handleChange = (event) => {
     setTutor(event.target.value);
     setSubject(event.target.value);
@@ -49,7 +49,7 @@ function SchedulePage() {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={tutor}>Mrs. Collins</MenuItem>
+              <MenuItem value={tutor.id}>tutor.full_name</MenuItem>
             </Select>
           </FormControl>
 
