@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+// MUI
+import { Button } from "@mui/material";
+import TutorDetails from "../TutorDetails/TutorDetails";
+
 function TutorsPage() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -12,7 +16,7 @@ function TutorsPage() {
   }, []);
 
   const clickTutorDetailsHandler = (id) => (event) => {
-    history.push(`/tutors/${id}`);
+    history.push(`/tutor/${id}`);
   };
 
   return (
@@ -28,9 +32,9 @@ function TutorsPage() {
             return (
               <div data-testid="tutorItem" key={tutor.id}>
                 <h3>{tutor.full_name}</h3>
-                <button onClick={clickTutorDetailsHandler(tutor.id)}>
-                  DETAILS
-                </button>
+                <Button onClick={clickTutorDetailsHandler(tutor.id)} >
+                  DETAILS 
+                </Button>
               </div>
             );
           })}

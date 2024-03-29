@@ -23,6 +23,7 @@ import UpdateProfilePage from '../UpdateProfilePage/UpdateProfilePage';
 
 import './App.css';
 import TutorsPage from '../TutorsPage/TutorsPage';
+import TutorsDetails from '../TutorDetails/TutorDetails';
 
 function App() {
   const dispatch = useDispatch();
@@ -81,6 +82,14 @@ function App() {
             path="/tutors"
           >
             <TutorsPage/>
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows TutorPage else shows LoginPage
+            exact
+            path="/tutor/:id"
+          >
+            <TutorsDetails/>
           </ProtectedRoute>
 
           <ProtectedRoute

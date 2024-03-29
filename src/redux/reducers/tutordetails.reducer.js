@@ -1,4 +1,4 @@
-export const tutorDetails = (state = null, action) => {
+export const tutorDetails = (state = {}, action) => {
     switch (action.type) {
       case 'SET_TUTOR_DETAILS':
         return action.payload;

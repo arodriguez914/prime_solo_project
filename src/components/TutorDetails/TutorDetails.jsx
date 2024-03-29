@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 function TutorsDetails() {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const tutorDetails = useSelector((store) => store.tutorDetails);
+    const tutorDetails = useSelector((store) => store.tutors);
   
     useEffect(() => {
       dispatch({ type: 'FETCH_TUTOR_DETAILS', payload: { id } });
@@ -15,7 +15,7 @@ function TutorsDetails() {
         
       <div>
         <div>
-        <h2 form className="updateFormPanel">Meet The Tutors Page</h2>
+        <h2 form className="updateFormPanel">{tutorDetails.full_name}</h2>
         </div>
         {tutorDetails ? (
           <section>

@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     const query = `
-    SELECT "img", "full_name", "grades_taught", "about" FROM "tutor"
+    SELECT * FROM "tutor"
     ORDER BY "full_name";`;
     pool
       .query(query)
