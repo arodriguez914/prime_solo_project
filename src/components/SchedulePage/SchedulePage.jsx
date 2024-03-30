@@ -25,10 +25,13 @@ function SchedulePage() {
   // };
 
   // placeholder text for tutor and subject
-  const subject = useSelector((store) => store.subject);
   const tutors = useSelector((store) => store.tutors);
-  const user= useSelector((store) => store. user);
-  const session= useSelector((store) => store. session);
+  const user = useSelector((store) => store.user);
+  const session = useSelector((store) => store.session);
+  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
+  const [duration, setDuration] = useState("");
+  const [subject, setSubject] = useState("");
 
   // calendar events
   const [weekendsVisible, setWeekendsVisible] = useState(true);
@@ -44,29 +47,24 @@ function SchedulePage() {
 
     calendarApi.unselect(); // clear date selection
 
-    if (title) {
-      
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      });
-      dispatch({
-        type: "POST_SESSION",
-        payload: {
-          date: session.date,
-          time: session.time,
-          duration: session.duration,
-          subject_name: subject.subject_name,
-          tutorName: tutors.tutorName,
-          full_name: user.full_name
-        }    
-    });
-  
+    
+      eventAdd = {
+        function() {
+          dispatch({
+            type: "POST_SESSION",
+            payload: {
+              date: date,
+              time: time,
+              duration: duration,
+              subject: subject,
+              tutorName: tutors.tutorName,
+              full_name: user.full_name,
+            },
+          });
+        },
+      };
     }
-  }
+  
 
   function handleEventClick(clickInfo) {
     if (
@@ -87,17 +85,17 @@ function SchedulePage() {
   const createSession = (event) => {
     event.preventDefault();
 
-  //   dispatch({
-  //     type: "POST_SESSION",
-  //     payload: {
-  //       date: date,
-  //       time: time,
-  //       duration: duration,
-  //       subject_name: subject_name,
-  //       tutorName: tutorName,
-  //       full_name: user.full_name
-  //     }    
-  // });
+    //   dispatch({
+    //     type: "POST_SESSION",
+    //     payload: {
+    //       date: date,
+    //       time: time,
+    //       duration: duration,
+    //       subject_name: subject_name,
+    //       tutorName: tutorName,
+    //       full_name: user.full_name
+    //     }
+    // });
   }; // end createSession
 
   return (

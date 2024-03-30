@@ -21,11 +21,13 @@ router.get('/', (req, res) => {
  * POST route template 
  */
 router.post('/schedule', (req, res) => {
-    const newSession = req.body;
+    const {date, time, duration, subject, tutorName, full_name} = req.body;
     const queryText = `INSERT INTO "session" ("date", "time", "duration")
-        VALUES ($1, $2, $3) RETURNING id;`;
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
+    const queryTutor = `SELECT "tutor"."full_name" FROM "tutor";`;
+    const queryuser = `SELECT "user"."full_name" FROM "user";`;
     
-    pool.query(queryText, [newSession.date, newSession.time, newSession.duration])
+    pool.query(queryText, [date, time, duration, subject, tutorName, full_name])
         .then((result) => {
             res.sendStatus(201);
         })
