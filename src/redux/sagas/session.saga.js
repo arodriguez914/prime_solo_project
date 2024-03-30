@@ -21,11 +21,8 @@ function* postSessionSaga(action) {
     // try catch block
     try {
       // POST a new session
-      yield axios({
-        method: 'POST',
-        url: '/api/session',
-        data: { date, time, duration: action.payload },
-      });
+      yield axios.post('/api/session/schedule', action.payload);
+
       // dispatch to refresh GET
       yield put({ type: 'GET_SESSION' });
     } catch (error) {
@@ -41,7 +38,7 @@ function* postSessionSaga(action) {
       // code to try running HERE
       const sessionResponse = yield axios({
         method: 'PUT',
-        url: `/api/session${action.payload.id}`,
+        url: `/api/session/${action.payload.id}`,
         data: { id: action.payload },
       });
       yield put({ type: 'GET_SESSION', payload: sessionResponse.data });
