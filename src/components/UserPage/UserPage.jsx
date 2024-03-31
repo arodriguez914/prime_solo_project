@@ -1,12 +1,18 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const session = useSelector((store) => store.session)
+
+  
+
   return (
     <Grid container spacing={2} paddingLeft={"22%"} paddingRight={"5%"} alignItems="center">
       <div className="container">

@@ -45,25 +45,34 @@ function SchedulePage() {
     let title = prompt("Please enter a new title for your event");
     let calendarApi = selectInfo.view.calendar;
 
-    calendarApi.unselect(); // clear date selection
-
-    
-      eventAdd = {
-        function() {
+  title && (
           dispatch({
             type: "POST_SESSION",
             payload: {
               date: date,
               time: time,
               duration: duration,
-              subject: subject,
-              tutorName: tutors.tutorName,
-              full_name: user.full_name,
+              // subject: subject,
+              user: id,
+              tutors: id,
+            },
+          }))
+       
+  calendarApi.unselect(); // clear date selection
+          ({
+            type: "DELETE_SESSION",
+            payload: {
+              date: date,
+              time: time,
+              duration: duration,
+              // subject: subject,
+              user: id,
+              tutors: id,
             },
           });
-        },
-      };
-    }
+        }
+          
+       
   
 
   function handleEventClick(clickInfo) {
@@ -135,6 +144,7 @@ function SchedulePage() {
               click: function () {
                 alert("clicked the scheduling button!");
               },
+
             },
           }}
         />

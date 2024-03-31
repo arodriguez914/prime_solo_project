@@ -21,21 +21,35 @@ router.get('/', (req, res) => {
  * POST route template 
  */
 router.post('/schedule', (req, res) => {
-    const {date, time, duration, subject, tutorName, full_name} = req.body;
-    const queryText = `INSERT INTO "session" ("date", "time", "duration")
-        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
-    const queryTutor = `SELECT "tutor"."full_name" FROM "tutor";`;
-    const queryuser = `SELECT "user"."full_name" FROM "user";`;
+    const {date, time, duration, subject, tutorName, full_name, user, tutor} = req.body;
+    const queryText = `INSERT INTO "session" ("date", "time", "duration, student_id, tutor_id")
+        VALUES ($1, $2, $3, $4, $5) RETURNING id;`;
     
-    pool.query(queryText, [date, time, duration, subject, tutorName, full_name])
-        .then((result) => {
-            res.sendStatus(201);
-        })
-        .catch((err) => {
-            console.log(`Error making query ${queryText}`, err);
+    pool.query(queryText, [date, time, duration, user.id, tutor.id])
+    .then((response) => {
+      console.log('Response 1:', response);
+    })
+          .catch((err) => {
+            console.log('Session creation failed: ', err);
             res.sendStatus(500);
-        });
-});
+    })
+  })
+
+// pool.query(queryText, [date, time, duration])
+// .then((response) => {
+//   console.log('Response 1:', response);
+//     pool.query(queryTutor, [tutorName])
+//     .then((response) => {
+//       console.log('Response 2:', response);
+//       pool.query(queryuser, [full_name])
+//       .then((response) => {res.sendStatus(201);})})}).catch(res.sendStatus(500))
+//           .catch((err) => {
+//         console.log('Session creation failed: ', err);
+//         res.sendStatus(500);
+//   })
+//   })
+
+
 
 router.delete('/:id', (req, res) => {
     const sessionId = req.params.id;
