@@ -8,6 +8,22 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 // Full Calendar
 import FullCalendar from "@fullcalendar/react";
@@ -18,11 +34,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { INITIAL_EVENTS, createEventId } from "./event-utils";
 
 function SchedulePage() {
-  // CREATE DISPATCH HERE TO CREATE EVENTS ... snackbar .. modal
-  // const handleChange = (event) => {
-  //   setTutor(event.target.value);
-  //   setSubject(event.target.value);
-  // };
+  const dispatch = useDispatch();
 
   // placeholder text for tutor and subject
   const tutors = useSelector((store) => store.tutors);
@@ -32,49 +44,41 @@ function SchedulePage() {
   const [date, setDate] = useState("");
   const [duration, setDuration] = useState("");
   const [subject, setSubject] = useState("");
+  const [tutor, setTutor] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   // calendar events
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [currentEvents, setCurrentEvents] = useState([]);
 
+  // simply shows us weekends or not
   function handleWeekendsToggle() {
     setWeekendsVisible(!weekendsVisible);
   }
 
+  // this is what will fire when we click a date on the calendar
   function handleDateSelect(selectInfo) {
     let title = prompt("Please enter a new title for your event");
     let calendarApi = selectInfo.view.calendar;
 
-  title && (
-          dispatch({
-            type: "POST_SESSION",
-            payload: {
-              date: date,
-              time: time,
-              duration: duration,
-              // subject: subject,
-              user: id,
-              tutors: id,
-            },
-          }))
-       
-  calendarApi.unselect(); // clear date selection
-          ({
-            type: "DELETE_SESSION",
-            payload: {
-              date: date,
-              time: time,
-              duration: duration,
-              // subject: subject,
-              user: id,
-              tutors: id,
-            },
-          });
-        }
-          
-       
-  
+    title && //should date time etc be click info..
+      dispatch({
+        type: "POST_SESSION",
+        payload: {
+          date: date,
+          time: time,
+          duration: duration,
+          // subject: subject,
+          user: id,
+          tutor: id,
+        },
+      });
+    calendarApi.unselect(); // clear date selection
+  }
 
+  //this is what will fire when we click a date on the calendar that has been scheduled
   function handleEventClick(clickInfo) {
     if (
       confirm(
@@ -82,6 +86,17 @@ function SchedulePage() {
       )
     ) {
       clickInfo.event.remove();
+      dispatch({
+        type: "DELETE_SESSION",
+        payload: {
+          date: date,
+          time: time,
+          duration: duration,
+          // subject: subject.id,
+          user: user.id,
+          tutor: tutors.id,
+        },
+      });
     }
   }
 
@@ -89,26 +104,13 @@ function SchedulePage() {
     setCurrentEvents(events);
   }
 
-  const dispatch = useDispatch();
-
-  const createSession = (event) => {
-    event.preventDefault();
-
-    //   dispatch({
-    //     type: "POST_SESSION",
-    //     payload: {
-    //       date: date,
-    //       time: time,
-    //       duration: duration,
-    //       subject_name: subject_name,
-    //       tutorName: tutorName,
-    //       full_name: user.full_name
-    //     }
-    // });
-  }; // end createSession
+  function handleSelectChange(event) {
+    setTutor(event.target.value);
+  }
 
   return (
     <div className="sched-heading">
+      <div></div>
       <Grid>
         <Sidebar
           weekendsVisible={weekendsVisible}
@@ -136,17 +138,6 @@ function SchedulePage() {
           eventAdd={function () {}}
           eventChange={function () {}}
           eventRemove={function () {}}
-          /* you can update a remote database when these fire:
-           */
-          customButtons={{
-            newAppointment: {
-              text: "Schedule Appointment",
-              click: function () {
-                alert("clicked the scheduling button!");
-              },
-
-            },
-          }}
         />
         <div className="schedule-items">
           <FormControl required sx={{ m: 1, minWidth: 200 }}>
@@ -156,9 +147,9 @@ function SchedulePage() {
             <Select
               labelId="demo-simple-select-required-label"
               id="demo-simple-select-required"
-              value={tutors}
+              value={tutor}
               label="Age *"
-              // onChange={handleChange}
+              onChange={handleSelectChange}
             >
               <MenuItem value="">
                 <em>None</em>
