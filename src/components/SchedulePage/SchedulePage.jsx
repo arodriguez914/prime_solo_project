@@ -49,32 +49,32 @@ function SchedulePage() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // calendar events
+  // CALENDAR EVENTS STARTING HERE
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [currentEvents, setCurrentEvents] = useState([]);
 
-  // simply shows us weekends or not
+  // *simply shows us weekends or not
   function handleWeekendsToggle() {
     setWeekendsVisible(!weekendsVisible);
   }
 
   // this is what will fire when we click a date on the calendar
   function handleDateSelect(selectInfo) {
-    let title = prompt("Please enter a new title for your event");
     let calendarApi = selectInfo.view.calendar;
 
-    title && //should date time etc be click info..
-      dispatch({
-        type: "POST_SESSION",
-        payload: {
-          date: date,
-          time: time,
-          duration: duration,
-          // subject: subject,
-          user: id,
-          tutor: id,
-        },
-      });
+    //.. NOT THE SAGA THAT WILL BE SENDING TO SERVER.. THAT WILL BE type: POST_SESSION
+    dispatch({
+      type: "SET_SESSION",
+      payload: {
+        date: date,
+        time: time,
+        duration: duration,
+        subject: subject,
+        user: user.id,
+        tutor: tutor.id,
+      },
+    });
+
     calendarApi.unselect(); // clear date selection
   }
 
@@ -89,8 +89,8 @@ function SchedulePage() {
       dispatch({
         type: "DELETE_SESSION",
         payload: {
-          date: date,
-          time: time,
+          date: clickInfo.event.start,
+          time: clickInfo.event.start.timeText,
           duration: duration,
           // subject: subject.id,
           user: user.id,
@@ -110,18 +110,74 @@ function SchedulePage() {
 
   return (
     <div className="sched-heading">
-      <div></div>
       <Grid>
         <Sidebar
           weekendsVisible={weekendsVisible}
           handleWeekendsToggle={handleWeekendsToggle}
           currentEvents={currentEvents}
         />
+        <Button onClick={handleOpen}>Open</Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-tutor"
+          aria-describedby="modal-modal-subject"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-date" variant="h6" component="h2">
+              {session.time}
+            </Typography>
+            <Typography id="modal-modal-tutor" variant="h6" component="h2">
+              <FormControl required sx={{ m: 1, minWidth: 200 }}>
+                <InputLabel id="demo-simple-select-required-label">
+                  Tutor
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-required-label"
+                  id="demo-simple-select-required"
+                  value={tutor}
+                  label="Tutor"
+                  onChange={handleSelectChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {tutors &&
+                    tutors.map((tutors) => {
+                      return (
+                        <MenuItem value={tutors.id}>
+                          {tutors.full_name}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </FormControl>
+            </Typography>
+            <Typography id="modal-modal-subject" variant="h6" component="h2">
+              <FormControl required sx={{ m: 1, minWidth: 200 }}>
+                <InputLabel id="demo-simple-select-required-label">
+                  Subject
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-required-label"
+                  id="demo-simple-select-required"
+                  value={subject}
+                  label="Subject"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={subject}>{subject.id}</MenuItem>
+                </Select>
+              </FormControl>
+            </Typography>
+          </Box>
+        </Modal>
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
             left: "prev,next today",
-            center: "newAppointment",
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
           initialView="dayGridMonth"
@@ -139,48 +195,6 @@ function SchedulePage() {
           eventChange={function () {}}
           eventRemove={function () {}}
         />
-        <div className="schedule-items">
-          <FormControl required sx={{ m: 1, minWidth: 200 }}>
-            <InputLabel id="demo-simple-select-required-label">
-              Tutor
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-required-label"
-              id="demo-simple-select-required"
-              value={tutor}
-              label="Age *"
-              onChange={handleSelectChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {tutors &&
-                tutors.map((tutors) => {
-                  return (
-                    <MenuItem value={tutors.id}>{tutors.full_name}</MenuItem>
-                  );
-                })}
-            </Select>
-          </FormControl>
-
-          <FormControl required sx={{ m: 1, minWidth: 200 }}>
-            <InputLabel id="demo-simple-select-required-label">
-              Subject
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-required-label"
-              id="demo-simple-select-required"
-              value={subject}
-              label="Age *"
-              // onChange={handleChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={subject}>{subject.id}</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
       </Grid>
     </div>
   );

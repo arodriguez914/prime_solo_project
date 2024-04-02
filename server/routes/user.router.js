@@ -48,17 +48,22 @@ router.post('/register', (req, res, next) => {
 
   pool
     .query(queryText, [username, password, full_name, is_student])
-     .then((response) => {
+        .then((response) => {
         console.log('Response 1:', response);
         const createdStudentId = response.rows[0].id; 
         is_student && (
         pool.query(queryStudent, [full_name, parentName, parentEmail, parentPhone, createdStudentId]).then((response) => {
-        console.log('Response 2:', response)}).catch(res.sendStatus(500)))
+        console.log('Response 2:', response)}).catch((e) => {res.sendStatus(500)}))
         
         const createdTutorId = response.rows[0].id; 
         !is_student && (
         pool.query(queryTutor, [full_name, gradesTaught, about, createdTutorId]).then((response) => {
-          console.log('Response 3:', response)}).catch(res.sendStatus(500)))     
+          console.log('Response 3:', response)
+        }).catch((e) => {
+          console.log(e);
+          res.sendStatus(500)
+        }))     
+        
     .catch((err) => {
       console.log('User registration failed: ', err);
       res.sendStatus(500);
@@ -76,21 +81,28 @@ router.put('/update/:id', (req, res, next) => {
     SET "full_name" = ($1) WHERE "id" = ($2);`;
 
   const queryStudent = `UPDATE "student" 
-    SET "name" = ($1), "parent_name" = ($2), "parent_email" = ($3), "parent_number" = ($4), "comments" = ($5),  WHERE "id" = ($6);`;
+    SET "name" = ($1), "parent_name" = ($2), "parent_email" = ($3), "parent_number" = ($4), "comments" = ($5),  WHERE "user_id" = ($6);`;
 
   const queryTutor = `UPDATE "tutor" 
-    SET "full_name" = ($1), "grades_taught" = ($2), "about" = ($3) WHERE "id" = ($4);`;
+    SET "full_name" = ($1), "grades_taught" = ($2), "about" = ($3) WHERE "user_id" = ($4);`;
 
   pool
   .query(queryText,[full_name, profileId])
    .then((response) => {
       is_student && (
-      pool.query(queryStudent, [full_name, parentName, parentEmail, parentPhone, comments, profileId]).then((response) => {
-      console.log('Response 2:', response)}).catch(res.sendStatus(500)))
-
+     pool.query(queryStudent, [full_name, parentName, parentEmail, parentPhone, comments, profileId]).then((response) => {
+        console.log('Response 2:', response)
+        res.send(200);
+      })).catch((e) => {
+        res.sendStatus(500)
+      })
       !is_student && (
-      pool.query(queryTutor, [full_name, gradesTaught, about, profileId]).then((response) => {
-        console.log('Response 3:', response)}).catch(res.sendStatus(500)))         
+     pool.query(queryTutor, [full_name, gradesTaught, about, profileId]).then((response) => {
+       console.log('Response 3:', response)
+       res.sendStatus(200);
+     })).catch((e) => {
+       res.sendStatus(500)
+     })        
   .catch((err) => {
     console.log('User update failed: ', err);
     res.sendStatus(500);

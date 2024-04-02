@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
  */
 router.post('/schedule', (req, res) => {
     const {date, time, duration, subject, tutorName, full_name, user, tutor} = req.body;
-    const queryText = `INSERT INTO "session" ("date", "time", "duration, student_id, tutor_id")
+    const queryText = `INSERT INTO "session" ("date", "time", "duration", "student_id", "tutor_id")
         VALUES ($1, $2, $3, $4, $5) RETURNING id;`;
     
     pool.query(queryText, [date, time, duration, user.id, tutor.id])
