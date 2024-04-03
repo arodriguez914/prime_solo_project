@@ -16,7 +16,7 @@ function UserPage() {
   return (
     <Grid container spacing={2} paddingLeft={"22%"} paddingRight={"5%"} alignItems="center">
       <div className="container">
-        <h2>Welcome, {user.username}!</h2>
+        <h2>Welcome, {user.full_name}!</h2>
       </div>
       <Grid item xs={12}>
         <p className="dash-heading">My Upcoming Sessions</p>
@@ -30,7 +30,7 @@ function UserPage() {
             backgroundColor: "lightgrey",
           }}
         >
-          <h3>{session.date}</h3>
+          <h3 className="dash-heading">No upcoming sessions to display</h3>
         </Box>
       </Grid>
       <Grid item xs={6}>
@@ -45,7 +45,7 @@ function UserPage() {
             backgroundColor: "lightgrey",
           }}
         >
-          <h3>{user.username}</h3>
+          <h3 className="dash-heading">No previous sessions to display</h3>
         </Box>
       </Grid>
       <Grid item xs={6}>
@@ -60,7 +60,7 @@ function UserPage() {
             backgroundColor: "lightgrey",
           }}
         >
-          <h3>{user.username}</h3>
+          <h3 className="dash-heading">No feedback received</h3>
         {!user.id && (
           // If there's no user, show login/registration links
           <Link className="navLink" to="/login">

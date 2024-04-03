@@ -36,8 +36,8 @@ function UpdateProfilePage() {
   return (
     <form className="updateFormPanel" onSubmit={updateUser}>
       <div>
-        <h2 form className="updateFormPanel">
-          Update Profile Page
+        <h2>
+          <u>Update Profile </u>
         </h2>
         <div>
           <label htmlFor="name">

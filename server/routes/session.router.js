@@ -21,13 +21,15 @@ router.get('/', (req, res) => {
  * POST route template 
  */
 router.post('/schedule', (req, res) => {
-    const {date, time, duration, subject, tutorName, full_name, user, tutor} = req.body;
-    const queryText = `INSERT INTO "session" ("date", "time", "duration", "student_id", "tutor_id")
+  console.log(req.body);
+    const {startDate, endDate, subject, tutorName, full_name, user, tutor, student} = req.body;
+    const queryText = `INSERT INTO "session" ("student_id", "tutor_id", "subject_id", "start_datetime", "end_datetime")
         VALUES ($1, $2, $3, $4, $5) RETURNING id;`;
     
-    pool.query(queryText, [date, time, duration, user.id, tutor.id])
+    pool.query(queryText, [student.id, tutor.id, subject.id, startDate, endDate])
     .then((response) => {
       console.log('Response 1:', response);
+      res.sendStatus(200);
     })
           .catch((err) => {
             console.log('Session creation failed: ', err);

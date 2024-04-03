@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 // MUI
 import Grid from "@mui/material/Grid";
@@ -32,7 +33,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { INITIAL_EVENTS, createEventId } from "./event-utils";
-
+let calendarApi;
 function SchedulePage() {
   const dispatch = useDispatch();
 
@@ -40,11 +41,11 @@ function SchedulePage() {
   const tutors = useSelector((store) => store.tutors);
   const user = useSelector((store) => store.user);
   const session = useSelector((store) => store.session);
-  const [time, setTime] = useState("");
-  const [date, setDate] = useState("");
-  const [duration, setDuration] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [subject, setSubject] = useState("");
   const [tutor, setTutor] = useState("");
+  const [student, setStudent] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -60,22 +61,54 @@ function SchedulePage() {
 
   // this is what will fire when we click a date on the calendar
   function handleDateSelect(selectInfo) {
-    let calendarApi = selectInfo.view.calendar;
+    console.log(selectInfo);
+    calendarApi = selectInfo.view.calendar;
+    setStartDate(selectInfo.startStr);
+    setEndDate(selectInfo.endStr);
+    setOpen(true);
+  }
 
-    //.. NOT THE SAGA THAT WILL BE SENDING TO SERVER.. THAT WILL BE type: POST_SESSION
-    dispatch({
-      type: "SET_SESSION",
-      payload: {
-        date: date,
-        time: time,
-        duration: duration,
-        subject: subject,
-        user: user.id,
-        tutor: tutor.id,
-      },
-    });
+  function handleSubmitDate() {
+    axios
+      .post("/api/session/schedule", {
+        startDate: setStartDate,
+        endDate: setEndDate,
+        subject: "test",
+        tutorName: "test",
+        full_name: "test",
+        student: {
+          id: 8,
+        },
+        tutor: {
+          id: 6,
+        },
+        subject: {
+          id: 1,
+        },
+      })
+      .then(() => {
+        console.log("success");
+      })
+      .catch((e) => {
+        console.log("e", e);
+      });
+    // dispatch({
+    //   type: "SET_SESSION",
+    //   payload: {
+    //     date: date,
+    //     time: time,
+    //     duration: duration,
+    //     subject: subject,
+    //     user: user.id,
+    //     tutor: tutor.id,
+    //   },
+    // });
+    setOpen(false);
+  }
 
+  function handleCancel() {
     calendarApi.unselect(); // clear date selection
+    setOpen(false);
   }
 
   //this is what will fire when we click a date on the calendar that has been scheduled
@@ -100,8 +133,13 @@ function SchedulePage() {
     }
   }
 
+  function addEvent(event) {
+    console.log("addEvent", event);
+  }
+
   function handleEvents(events) {
     setCurrentEvents(events);
+    console.log("addEvent", events);
   }
 
   function handleSelectChange(event) {
@@ -116,16 +154,15 @@ function SchedulePage() {
           handleWeekendsToggle={handleWeekendsToggle}
           currentEvents={currentEvents}
         />
-        <Button onClick={handleOpen}>Open</Button>
         <Modal
           open={open}
-          onClose={handleClose}
+          onClose={handleCancel}
           aria-labelledby="modal-modal-tutor"
           aria-describedby="modal-modal-subject"
         >
           <Box sx={style}>
             <Typography id="modal-modal-date" variant="h6" component="h2">
-              {session.time}
+              {startDate}
             </Typography>
             <Typography id="modal-modal-tutor" variant="h6" component="h2">
               <FormControl required sx={{ m: 1, minWidth: 200 }}>
@@ -172,6 +209,8 @@ function SchedulePage() {
                 </Select>
               </FormControl>
             </Typography>
+            <Button onClick={handleCancel}>Cancel</Button>
+            <Button onClick={handleSubmitDate}>Submit</Button>
           </Box>
         </Modal>
         <FullCalendar
@@ -191,7 +230,7 @@ function SchedulePage() {
           eventContent={renderEventContent} // custom render function
           eventClick={handleEventClick}
           eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-          eventAdd={function () {}}
+          eventAdd={addEvent}
           eventChange={function () {}}
           eventRemove={function () {}}
         />
@@ -209,14 +248,14 @@ function renderEventContent(eventInfo) {
   );
 }
 
-function Sidebar({ weekendsVisible, handleWeekendsToggle, currentEvents }) {
+function Sidebar({ weekendsVisible, handleWeekendsToggle, }) {
   return (
     <div className="demo-app-sidebar">
       <div className="demo-app-sidebar-section">
-        <h2>Instructions</h2>
+        <h1>Instructions</h1>
         <ul>
-          <li>Select dates and you will be prompted to create a new event</li>
-          <li>Drag, drop, and resize events</li>
+          <li>Select date and time and you will be prompted to create a new event</li>
+          <li>Select tutor and subject to confirm appointment</li>
           <li>Click an event to delete it</li>
         </ul>
       </div>
@@ -227,33 +266,10 @@ function Sidebar({ weekendsVisible, handleWeekendsToggle, currentEvents }) {
             checked={weekendsVisible}
             onChange={handleWeekendsToggle}
           ></input>
-          toggle weekends
+          Toggle Weekends
         </label>
       </div>
-      <div className="demo-app-sidebar-section">
-        <h2>All Events ({currentEvents.length})</h2>
-        <ul>
-          {currentEvents.map((event) => (
-            <SidebarEvent key={event.id} event={event} />
-          ))}
-        </ul>
       </div>
-    </div>
-  );
-}
-
-function SidebarEvent({ event }) {
-  return (
-    <li key={event.id}>
-      <b>
-        {formatDate(event.start, {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        })}
-      </b>
-      <i>{event.title}</i>
-    </li>
   );
 }
 

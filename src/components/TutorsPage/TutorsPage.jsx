@@ -23,7 +23,7 @@ function TutorsPage() {
     <div className="updateFormPanel">
       <div>
         <h2 >
-          Meet The Tutors Page
+          <u>Meet The Tutors</u>
         </h2>
       </div>
       <section className="tutors">
@@ -31,11 +31,11 @@ function TutorsPage() {
           tutors.map((tutor) => {
             return (
               <div data-testid="tutorItem" key={tutor.id}>
-                <h3>{tutor.full_name}</h3>
-                <Button onClick={clickTutorDetailsHandler(tutor.id)} >
-                  DETAILS 
-                </Button>
-              </div>
+                <h1 sx={{ '& button': { m: 2 } }}>
+                <Button size="large" variant="outlined" onClick={clickTutorDetailsHandler(tutor.id)} >
+                  {tutor.full_name} 
+                </Button></h1>
+              </div> 
             );
           })}
       </section>
