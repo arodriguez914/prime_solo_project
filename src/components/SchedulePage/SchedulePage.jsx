@@ -42,12 +42,13 @@ function SchedulePage() {
   const tutors = useSelector((store) => store.tutors);
   const user = useSelector((store) => store.user);
   const subjects = useSelector((store) => store.subject);
+  const students = useSelector((store) => store.students);
   const session = useSelector((store) => store.session);
   const [startDate, setStartDate] = useState("");
+  const [student, setStudent] = useState("");
   const [endDate, setEndDate] = useState("");
   const [subject, setSubject] = useState("");
   const [tutor, setTutor] = useState("");
-  const [student, setStudent] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -58,6 +59,10 @@ function SchedulePage() {
 
   useEffect(() => {
     dispatch({ type: "FETCH_SUBJECTS" });
+  }, []);
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_STUDENTS" });
   }, []);
 
   // CALENDAR EVENTS STARTING HERE
@@ -79,9 +84,8 @@ function SchedulePage() {
   }
 
   function handleSubmitDate() {
-    console.log(user);
-    console.log(student);
-    console.log(subject);
+    console.log('Student:', student);
+    console.log('Subject:', subject);
     // axios
     //   .post("/api/session/schedule", {
       //   startDate: startDate,
@@ -107,9 +111,9 @@ function SchedulePage() {
       payload: {
       startDate: startDate,
       endDate: endDate,
-      student: user.id,
+      scheduler: students,
       tutor: tutor,
-      subject: subject.id,
+      subject: subject,
     }
   });
   setOpen(false);

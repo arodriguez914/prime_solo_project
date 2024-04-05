@@ -6,7 +6,7 @@ import updateSaga from './update.saga';
 import sessionSaga from './session.saga';
 import tutorSaga from './tutors.saga';
 import subjectSaga from './subject.saga';
-
+import studentSaga from './student.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -24,5 +24,6 @@ export default function* rootSaga() {
     sessionSaga(),
     tutorSaga(),
     subjectSaga(),
+    studentSaga(),
   ]);
 }

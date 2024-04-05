@@ -12,6 +12,7 @@ const userRouter = require('./routes/user.router');
 const sessionRouter = require('./routes/session.router');
 const tutorRouter = require('./routes/tutor.router');
 const subjectRouter = require('./routes/subject.router');
+const studentRouter = require('./routes/student.router');
 
 // Express Middleware
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use('/api/user', userRouter);
 app.use('/api/session', sessionRouter);
 app.use('/api/tutor', tutorRouter);
 app.use('/api/subject', subjectRouter);
+app.use('/api/student', studentRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {
