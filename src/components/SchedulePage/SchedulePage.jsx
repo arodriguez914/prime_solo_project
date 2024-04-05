@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { useEffect } from "react";
 
 // MUI
 import Grid from "@mui/material/Grid";
@@ -40,6 +41,7 @@ function SchedulePage() {
   // placeholder text for tutor and subject
   const tutors = useSelector((store) => store.tutors);
   const user = useSelector((store) => store.user);
+  const subjects = useSelector((store) => store.subject);
   const session = useSelector((store) => store.session);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -49,6 +51,14 @@ function SchedulePage() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_TUTORS" });
+  }, []);
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_SUBJECTS" });
+  }, []);
 
   // CALENDAR EVENTS STARTING HERE
   const [weekendsVisible, setWeekendsVisible] = useState(true);
@@ -69,41 +79,40 @@ function SchedulePage() {
   }
 
   function handleSubmitDate() {
-    axios
-      .post("/api/session/schedule", {
-        startDate: setStartDate,
-        endDate: setEndDate,
-        subject: "test",
-        tutorName: "test",
-        full_name: "test",
-        student: {
-          id: 8,
-        },
-        tutor: {
-          id: 6,
-        },
-        subject: {
-          id: 1,
-        },
-      })
-      .then(() => {
-        console.log("success");
-      })
-      .catch((e) => {
-        console.log("e", e);
-      });
-    // dispatch({
-    //   type: "SET_SESSION",
-    //   payload: {
-    //     date: date,
-    //     time: time,
-    //     duration: duration,
-    //     subject: subject,
-    //     user: user.id,
-    //     tutor: tutor.id,
-    //   },
-    // });
-    setOpen(false);
+    console.log(user);
+    console.log(student);
+    console.log(subject);
+    // axios
+    //   .post("/api/session/schedule", {
+      //   startDate: startDate,
+      //   endDate: endDate,
+      //   student: {
+      //     id: 8,
+      //   },
+      //   tutor: {
+      //     id: 6,
+      //   },
+      //   subject: {
+      //     id: 2,
+      //   },
+      // })
+      // .then(() => {
+      //   console.log("success");
+      // })
+      // .catch((e) => {
+      //   console.log("e", e);
+      // });
+    dispatch({
+      type: "POST_SESSION",
+      payload: {
+      startDate: startDate,
+      endDate: endDate,
+      student: user.id,
+      tutor: tutor,
+      subject: subject.id,
+    }
+  });
+  setOpen(false);
   }
 
   function handleCancel() {
@@ -146,6 +155,10 @@ function SchedulePage() {
     setTutor(event.target.value);
   }
 
+  function handleSelectSubject(event) {
+    setSubject(event.target.value);
+  }
+
   return (
     <div className="sched-heading">
       <Grid>
@@ -180,10 +193,10 @@ function SchedulePage() {
                     <em>None</em>
                   </MenuItem>
                   {tutors &&
-                    tutors.map((tutors) => {
+                    tutors.map((tutorItem) => {
                       return (
-                        <MenuItem value={tutors.id}>
-                          {tutors.full_name}
+                        <MenuItem value={tutorItem.id}>
+                          {tutorItem.full_name}
                         </MenuItem>
                       );
                     })}
@@ -200,12 +213,19 @@ function SchedulePage() {
                   id="demo-simple-select-required"
                   value={subject}
                   label="Subject"
-                  // onChange={handleChange}
+                  onChange={handleSelectSubject}
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={subject}>{subject.id}</MenuItem>
+                  {subjects &&
+                    subjects.map((subjectItem) => {
+                      return (
+                        <MenuItem value={subjectItem.id}>
+                          {subjectItem.subject_name}
+                        </MenuItem>
+                      );
+                    })}
                 </Select>
               </FormControl>
             </Typography>

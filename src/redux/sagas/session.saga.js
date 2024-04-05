@@ -24,7 +24,6 @@ function* postSessionSaga(action) {
       yield axios.post('/api/session/schedule', action.payload);
 
       // dispatch to refresh GET
-      yield put({ type: 'GET_SESSION' });
     } catch (error) {
       // error surface to user
       console.log('ERROR:', error);

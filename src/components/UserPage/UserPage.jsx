@@ -11,7 +11,9 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   const session = useSelector((store) => store.session)
 
-  
+  useEffect(() => {
+    dispatch({ type: "GET_SESSION" });
+  }, []);
 
   return (
     <Grid container spacing={2} paddingLeft={"22%"} paddingRight={"5%"} alignItems="center">
@@ -30,7 +32,9 @@ function UserPage() {
             backgroundColor: "lightgrey",
           }}
         >
-          <h3 className="dash-heading">No upcoming sessions to display</h3>
+          <h3 className="dash-heading">No upcoming sessions to display
+          </h3>
+          
         </Box>
       </Grid>
       <Grid item xs={6}>

@@ -6,7 +6,7 @@ const router = express.Router();
  * GET route template set up by id
  */
 router.get('/', (req, res) => {
-    console.log('GET /api/session');
+    // console.log('GET /api/session');
     pool
       .query('SELECT * from "session";')
       .then((result) => {
@@ -22,11 +22,11 @@ router.get('/', (req, res) => {
  */
 router.post('/schedule', (req, res) => {
   console.log(req.body);
-    const {startDate, endDate, subject, tutorName, full_name, user, tutor, student} = req.body;
+    const {startDate, endDate, subject, tutor, student} = req.body;
     const queryText = `INSERT INTO "session" ("student_id", "tutor_id", "subject_id", "start_datetime", "end_datetime")
         VALUES ($1, $2, $3, $4, $5) RETURNING id;`;
     
-    pool.query(queryText, [student.id, tutor.id, subject.id, startDate, endDate])
+    pool.query(queryText, [student, tutor, subject, startDate, endDate])
     .then((response) => {
       console.log('Response 1:', response);
       res.sendStatus(200);
