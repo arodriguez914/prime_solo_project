@@ -65,6 +65,10 @@ function SchedulePage() {
     dispatch({ type: "FETCH_STUDENTS" });
   }, []);
 
+  // useEffect(() => {
+  //   dispatch({ type: "GET_SESSION" });
+  // }, []);
+
   // CALENDAR EVENTS STARTING HERE
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [currentEvents, setCurrentEvents] = useState([]);
@@ -84,39 +88,19 @@ function SchedulePage() {
   }
 
   function handleSubmitDate() {
-    console.log('Student:', student);
-    console.log('Subject:', subject);
-    // axios
-    //   .post("/api/session/schedule", {
-      //   startDate: startDate,
-      //   endDate: endDate,
-      //   student: {
-      //     id: 8,
-      //   },
-      //   tutor: {
-      //     id: 6,
-      //   },
-      //   subject: {
-      //     id: 2,
-      //   },
-      // })
-      // .then(() => {
-      //   console.log("success");
-      // })
-      // .catch((e) => {
-      //   console.log("e", e);
-      // });
+    console.log("Student:", student);
+    console.log("Subject:", subject);
     dispatch({
       type: "POST_SESSION",
       payload: {
-      startDate: startDate,
-      endDate: endDate,
-      scheduler: students,
-      tutor: tutor,
-      subject: subject,
-    }
-  });
-  setOpen(false);
+        startDate: startDate,
+        endDate: endDate,
+        student: students.user_id,
+        tutor: tutor,
+        subject: subject,
+      },
+    });
+    setOpen(false);
   }
 
   function handleCancel() {
@@ -268,17 +252,20 @@ function renderEventContent(eventInfo) {
     <>
       <b>{eventInfo.timeText}</b>
       <i>{eventInfo.event.title}</i>
+      {/* <i>{eventInfo.session.id}</i> */}
     </>
   );
 }
 
-function Sidebar({ weekendsVisible, handleWeekendsToggle, }) {
+function Sidebar({ weekendsVisible, handleWeekendsToggle }) {
   return (
     <div className="demo-app-sidebar">
       <div className="demo-app-sidebar-section">
         <h1>Instructions</h1>
         <ul>
-          <li>Select date and time and you will be prompted to create a new event</li>
+          <li>
+            Select date and time and you will be prompted to create a new event
+          </li>
           <li>Select tutor and subject to confirm appointment</li>
           <li>Click an event to delete it</li>
         </ul>
@@ -293,7 +280,7 @@ function Sidebar({ weekendsVisible, handleWeekendsToggle, }) {
           Toggle Weekends
         </label>
       </div>
-      </div>
+    </div>
   );
 }
 

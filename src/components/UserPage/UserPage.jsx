@@ -11,14 +11,15 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   const session = useSelector((store) => store.session)
 
-  useEffect(() => {
-    dispatch({ type: "GET_SESSION" });
-  }, []);
+  // useEffect(() => {
+  //   dispatch({ type: "GET_SESSION" });
+  // }, []);
 
   return (
     <Grid container spacing={2} paddingLeft={"22%"} paddingRight={"5%"} alignItems="center">
       <div className="container">
-        <h2>Welcome, {user.full_name}!</h2>
+        <h2>Welcome, {user.full_name}!
+        {session.id}</h2>
       </div>
       <Grid item xs={12}>
         <p className="dash-heading">My Upcoming Sessions</p>
