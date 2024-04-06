@@ -4,8 +4,10 @@ import { put, takeLatest, takeEvery } from 'redux-saga/effects';
 
 export function* fetchUpcomingSessions() {
   try {
+    console.log('upcoming Saga');
     // Get the session:
     const sessionResponse = yield axios.get('/api/session/upcoming');
+    console.log('Session Response:', sessionResponse);
     // Set the value of the session reducer:
     yield put({
       type: 'SET_SESSION',
@@ -18,6 +20,7 @@ export function* fetchUpcomingSessions() {
 
 function* fetchPastSessions() {
   try {
+    console.log('past Saga');
     const response = yield axios.get(`/api/session/past`);
     yield put({ type: 'SET_PAST_SESSION', payload: response.data });
   } catch (error) {
@@ -33,6 +36,9 @@ function* postSessionSaga(action) {
       yield axios.post('/api/session/schedule', action.payload);
 
       // dispatch to refresh GET
+      // yield put({ type: 'FETCH_PAST_SESSION' });
+      yield put({ type: 'FETCH_UPCOMING_SESSION' });
+      // yield put({ type: 'SET_SESSION' });
     } catch (error) {
       // error surface to user
       console.log('ERROR:', error);
@@ -74,8 +80,8 @@ function* deleteSessionSaga(action) {
   }
 
 function* sessionSaga() {
-    yield takeLatest('FETCH_UPCOMING_SESSION', fetchUpcomingSessions);
-    yield takeLatest('FETCH_PAST_SESSION', fetchPastSessions);
+    yield takeEvery('FETCH_UPCOMING_SESSION', fetchUpcomingSessions);
+    yield takeEvery('FETCH_PAST_SESSION', fetchPastSessions);
     yield takeEvery('POST_SESSION', postSessionSaga);
     yield takeEvery('PUT_SESSION', putSessionSaga);
     yield takeEvery('DELETE_SESSION', deleteSessionSaga);

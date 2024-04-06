@@ -34,6 +34,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { INITIAL_EVENTS, createEventId } from "./event-utils";
+import session, { pastSession } from "../../redux/reducers/session.reducer";
 let calendarApi;
 function SchedulePage() {
   const dispatch = useDispatch();
@@ -43,23 +44,26 @@ function SchedulePage() {
   const user = useSelector((store) => store.user);
   const subjects = useSelector((store) => store.subject);
   const students = useSelector((store) => store.students);
-  const session = useSelector((store) => store.session);
-  const pastSession = useSelector((store) => store.pastSession);
   const [startDate, setStartDate] = useState("");
-  const [student, setStudent] = useState("");
+  const [student, setStudent] = useState(user.id);
   const [endDate, setEndDate] = useState("");
   const [subject, setSubject] = useState("");
   const [tutor, setTutor] = useState("");
+  const session = useSelector((store) => store.session);
+  const pastSession = useSelector((store) => store.pastSession);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
+    console.log('in use effect');
+    console.log("Past", pastSession);
+    console.log("Upcoming", session);
     dispatch({ type: "FETCH_TUTORS" })
     dispatch({ type: "FETCH_SUBJECTS" })
     dispatch({ type: "FETCH_STUDENTS" })
-    dispatch({ type: "FETCH_SESSION" })
-    dispatch({ type: "FETCH_PAST_SESSION" });
+    dispatch({ type: "FETCH_UPCOMING_SESSION" })
+    console.log('use effect not running');
   }, []);
 
   // CALENDAR EVENTS STARTING HERE
@@ -83,12 +87,14 @@ function SchedulePage() {
   function handleSubmitDate() {
     console.log("Student:", student);
     console.log("Subject:", subject);
+    console.log("Past", pastSession);
+    console.log("Upcoming", session);
     dispatch({
       type: "POST_SESSION",
       payload: {
         startDate: startDate,
         endDate: endDate,
-        student: students.user_id,
+        student: student,
         tutor: tutor,
         subject: subject,
       },
@@ -112,12 +118,11 @@ function SchedulePage() {
       dispatch({
         type: "DELETE_SESSION",
         payload: {
-          date: clickInfo.event.start,
-          time: clickInfo.event.start.timeText,
-          duration: duration,
-          // subject: subject.id,
-          user: user.id,
-          tutor: tutors.id,
+        startDate: startDate,
+        endDate: endDate,
+        student: student,
+        tutor: tutor,
+        subject: subject,
         },
       });
     }
@@ -245,7 +250,7 @@ function renderEventContent(eventInfo) {
     <>
       <b>{eventInfo.timeText}</b>
       <i>{eventInfo.event.title}</i>
-      {/* <i>{eventInfo.session.id}</i> */}
+      <i>{pastSession.start_datetime}</i>
     </>
   );
 }
@@ -255,6 +260,7 @@ function Sidebar({ weekendsVisible, handleWeekendsToggle }) {
     <div className="demo-app-sidebar">
       <div className="demo-app-sidebar-section">
         <h1>Instructions</h1>
+        <p>{JSON.stringify(session)}</p>
         <ul>
           <li>
             Select date and time and you will be prompted to create a new event

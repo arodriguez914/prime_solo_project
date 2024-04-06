@@ -11,11 +11,11 @@ const {
  * GET route template set up by id
  */
 router.get('/upcoming', (req, res) => {
-    // console.log('GET /api/session');
+    console.log('GET /api/session/upcoming');
     pool
-      .query(`SELECT *, "student"."name", "tutor"."full_name", "subject"."subject_name" FROM "session"
-      JOIN "student" ON "session"."student_id" = "student"."id"
-      JOIN "tutor" ON "session"."student_id" = "tutor"."id"
+      .query(`SELECT *, "user"."full_name", "tutor"."full_name", "subject"."subject_name" FROM "session"
+      JOIN "user" ON "session"."student_id" = "user"."id"
+      JOIN "tutor" ON "session"."tutor_id" = "tutor"."id"
       JOIN "subject" ON "session"."subject_id" = "subject"."id"
       WHERE "start_datetime" >= CURRENT_TIMESTAMP
       ORDER BY "session"."start_datetime";`)
@@ -39,6 +39,7 @@ router.get('/upcoming', (req, res) => {
       ORDER BY "session"."start_datetime";`)
       .then((result) => {
         res.send(result.rows);
+        console.log('Past GET is:', result.rows); 
       })
       .catch((error) => {
         console.log('Error GET /api/session', error);

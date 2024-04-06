@@ -38,7 +38,7 @@ function RegisterForm() {
         gradesTaught: gradesTaught,
         about: about,
       }    
-  });
+    });
   }; // end registerUser
 
   
