@@ -44,6 +44,7 @@ function SchedulePage() {
   const subjects = useSelector((store) => store.subject);
   const students = useSelector((store) => store.students);
   const session = useSelector((store) => store.session);
+  const pastSession = useSelector((store) => store.pastSession);
   const [startDate, setStartDate] = useState("");
   const [student, setStudent] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -54,20 +55,12 @@ function SchedulePage() {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    dispatch({ type: "FETCH_TUTORS" });
+    dispatch({ type: "FETCH_TUTORS" })
+    dispatch({ type: "FETCH_SUBJECTS" })
+    dispatch({ type: "FETCH_STUDENTS" })
+    dispatch({ type: "FETCH_SESSION" })
+    dispatch({ type: "FETCH_PAST_SESSION" });
   }, []);
-
-  useEffect(() => {
-    dispatch({ type: "FETCH_SUBJECTS" });
-  }, []);
-
-  useEffect(() => {
-    dispatch({ type: "FETCH_STUDENTS" });
-  }, []);
-
-  // useEffect(() => {
-  //   dispatch({ type: "GET_SESSION" });
-  // }, []);
 
   // CALENDAR EVENTS STARTING HERE
   const [weekendsVisible, setWeekendsVisible] = useState(true);

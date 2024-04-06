@@ -2,17 +2,26 @@
 import axios from 'axios';
 import { put, takeLatest, takeEvery } from 'redux-saga/effects';
 
-export function* getSessionSaga() {
+export function* fetchUpcomingSessions() {
   try {
     // Get the session:
-    const sessionResponse = yield axios.get('/api/session');
+    const sessionResponse = yield axios.get('/api/session/upcoming');
     // Set the value of the session reducer:
     yield put({
-      type: 'GET_SESSION',
+      type: 'SET_SESSION',
       payload: sessionResponse.data,
     });
   } catch (error) {
     console.log('fetchAllSessions error:', error);
+  }
+}
+
+function* fetchPastSessions() {
+  try {
+    const response = yield axios.get(`/api/session/past`);
+    yield put({ type: 'SET_PAST_SESSION', payload: response.data });
+  } catch (error) {
+    console.error('Error fetching past sessions:', error);
   }
 }
 
@@ -40,7 +49,7 @@ function* postSessionSaga(action) {
         url: `/api/session/${action.payload.id}`,
         data: { id: action.payload },
       });
-      yield put({ type: 'GET_SESSION', payload: sessionResponse.data });
+      yield put({ type: 'SET_SESSION', payload: sessionResponse.data });
     } catch (error) {
       console.log('ERROR:', error)    
     }
@@ -57,7 +66,7 @@ function* deleteSessionSaga(action) {
         data: { id: action.payload },
       });
       // dispatch to refresh GET
-      yield put({ type: 'GET_SESSION' });
+      yield put({ type: 'SET_SESSION' });
     } catch (error) {
       // error surface to user
       console.log('ERROR:', error);
@@ -65,7 +74,8 @@ function* deleteSessionSaga(action) {
   }
 
 function* sessionSaga() {
-    yield takeLatest('GET_SESSION', getSessionSaga);
+    yield takeLatest('FETCH_UPCOMING_SESSION', fetchUpcomingSessions);
+    yield takeLatest('FETCH_PAST_SESSION', fetchPastSessions);
     yield takeEvery('POST_SESSION', postSessionSaga);
     yield takeEvery('PUT_SESSION', putSessionSaga);
     yield takeEvery('DELETE_SESSION', deleteSessionSaga);

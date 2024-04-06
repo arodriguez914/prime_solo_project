@@ -10,7 +10,7 @@ const {
 /**
  * GET route template set up by id
  */
-router.get('/scheduled', rejectUnauthenticated, (req, res) => {
+router.get('/upcoming', (req, res) => {
     // console.log('GET /api/session');
     pool
       .query(`SELECT *, "student"."name", "tutor"."full_name", "subject"."subject_name" FROM "session"
@@ -28,7 +28,7 @@ router.get('/scheduled', rejectUnauthenticated, (req, res) => {
       });
   });
 
-  router.get('/past', rejectUnauthenticated, (req, res) => {
+  router.get('/past', (req, res) => {
     // console.log('GET /api/session');
     pool
       .query(`SELECT *, "student"."name", "tutor"."full_name", "subject"."subject_name" FROM "session"
@@ -36,7 +36,7 @@ router.get('/scheduled', rejectUnauthenticated, (req, res) => {
       JOIN "tutor" ON "session"."tutor_id" = "tutor"."id"
       JOIN "subject" ON "session"."subject_id" = "subject"."id"
       WHERE "start_datetime" < CURRENT_TIMESTAMP
-      ORDER BY "session"."start_datetime;`)
+      ORDER BY "session"."start_datetime";`)
       .then((result) => {
         res.send(result.rows);
       })

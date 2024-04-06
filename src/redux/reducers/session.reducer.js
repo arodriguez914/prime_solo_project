@@ -1,4 +1,4 @@
-const sessionReducer = (state = {}, action) => {
+const session = (state = [], action) => {
     switch (action.type) {
       case 'SET_SESSION':
         return action.payload;
@@ -8,5 +8,15 @@ const sessionReducer = (state = {}, action) => {
         return state;
     }
   };
+
+  export const pastSession = (state = [], action) => {
+    switch (action.type) {
+      case 'SET_PAST_SESSION':
+        return action.payload;
+      default:
+        return state;
+    }
+  };
   
-  export default sessionReducer;
+  
+  export default session;

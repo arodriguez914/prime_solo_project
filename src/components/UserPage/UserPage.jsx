@@ -9,17 +9,18 @@ function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
-  const session = useSelector((store) => store.session)
+  const session = useSelector((store) => store.session);
+  const pastSession = useSelector((store) => store.pastSession);
 
-  // useEffect(() => {
-  //   dispatch({ type: "GET_SESSION" });
-  // }, []);
+  useEffect(() => {
+    dispatch({ type: "FETCH_PAST_SESSION" })
+    dispatch({ type: "FETCH_SESSION" });
+  }, []);
 
   return (
     <Grid container spacing={2} paddingLeft={"22%"} paddingRight={"5%"} alignItems="center">
       <div className="container">
-        <h2>Welcome, {user.full_name}!
-        {session.id}</h2>
+        <h2>Welcome, {user.full_name}!</h2>
       </div>
       <Grid item xs={12}>
         <p className="dash-heading">My Upcoming Sessions</p>
@@ -35,6 +36,7 @@ function UserPage() {
         >
           <h3 className="dash-heading">No upcoming sessions to display
           </h3>
+          <p>{pastSession}</p>
           
         </Box>
       </Grid>
