@@ -11,13 +11,13 @@ const {
  * GET route template set up by id
  */
 router.get('/upcoming', (req, res) => {
-    console.log('GET /api/session/upcoming');
+    // console.log('GET /api/session/upcoming');
     pool
-      .query(`SELECT *, "user"."full_name", "tutor"."full_name", "subject"."subject_name" FROM "session"
+      .query(`SELECT session.*, "user"."full_name", "tutor"."full_name", "subject"."subject_name" FROM "session"
       JOIN "user" ON "session"."student_id" = "user"."id"
       JOIN "tutor" ON "session"."tutor_id" = "tutor"."id"
       JOIN "subject" ON "session"."subject_id" = "subject"."id"
-      WHERE "start_datetime" >= CURRENT_TIMESTAMP
+      WHERE "start_datetime" > CURRENT_TIMESTAMP
       ORDER BY "session"."start_datetime";`)
       .then((result) => {
         res.send(result.rows);
@@ -31,8 +31,8 @@ router.get('/upcoming', (req, res) => {
   router.get('/past', (req, res) => {
     // console.log('GET /api/session');
     pool
-      .query(`SELECT *, "student"."name", "tutor"."full_name", "subject"."subject_name" FROM "session"
-      JOIN "student" ON "session"."student_id" = "student"."id"
+      .query(`SELECT session.*, "user"."full_name", "tutor"."full_name", "subject"."subject_name" FROM "session"
+      JOIN "user" ON "session"."student_id" = "user"."id"
       JOIN "tutor" ON "session"."tutor_id" = "tutor"."id"
       JOIN "subject" ON "session"."subject_id" = "subject"."id"
       WHERE "start_datetime" < CURRENT_TIMESTAMP
@@ -66,23 +66,9 @@ router.post('/schedule', (req, res) => {
     })
   })
 
-// pool.query(queryText, [date, time, duration])
-// .then((response) => {
-//   console.log('Response 1:', response);
-//     pool.query(queryTutor, [tutorName])
-//     .then((response) => {
-//       console.log('Response 2:', response);
-//       pool.query(queryuser, [full_name])
-//       .then((response) => {res.sendStatus(201);})})}).catch(res.sendStatus(500))
-//           .catch((err) => {
-//         console.log('Session creation failed: ', err);
-//         res.sendStatus(500);
-//   })
-//   })
 
 
-
-router.delete('/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
     const sessionId = req.params.id;
     const queryText = `DELETE FROM "session" WHERE "id" = $1;`;
     pool

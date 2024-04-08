@@ -55,7 +55,7 @@ function* postSessionSaga(action) {
         url: `/api/session/${action.payload.id}`,
         data: { id: action.payload },
       });
-      yield put({ type: 'SET_SESSION', payload: sessionResponse.data });
+      // yield put({ type: 'SET_SESSION', payload: sessionResponse.data });
     } catch (error) {
       console.log('ERROR:', error)    
     }
@@ -68,11 +68,10 @@ function* deleteSessionSaga(action) {
       // DELETE a session
       yield axios({
         method: 'DELETE',
-        url: `/api/session/${action.payload.id}`,
-        data: { id: action.payload },
+        url: `/api/session/delete/${action.payload.id}`,
       });
       // dispatch to refresh GET
-      yield put({ type: 'SET_SESSION' });
+      // yield put({ type: 'FETCH_UPCOMING_SESSION' });
     } catch (error) {
       // error surface to user
       console.log('ERROR:', error);

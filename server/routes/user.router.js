@@ -25,8 +25,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     JOIN "student" ON "user".id = "student"."user_id"
     WHERE "student"."student.user_id" = $1;
   `;
-
- 
 });
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen

@@ -33,7 +33,7 @@ import { formatDate } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { INITIAL_EVENTS, createEventId } from "./event-utils";
+import { INITIAL_EVENTS, createEventId } from "./event-util";
 import session, { pastSession } from "../../redux/reducers/session.reducer";
 let calendarApi;
 function SchedulePage() {
