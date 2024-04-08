@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
 import session from './session.reducer';
-import pastSession from './session.reducer';
+import { pastSession } from './session.reducer';
 import { tutorDetails } from './tutordetails.reducer';
 import { tutors } from './tutor.reducer';
 import subject from './subject.reducer';

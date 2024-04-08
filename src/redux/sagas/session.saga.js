@@ -21,7 +21,7 @@ export function* fetchUpcomingSessions() {
 function* fetchPastSessions() {
   try {
     console.log('past Saga');
-    const response = yield axios.get(`/api/session/past`);
+    const response = yield axios.get('/api/session/past');
     yield put({ type: 'SET_PAST_SESSION', payload: response.data });
   } catch (error) {
     console.error('Error fetching past sessions:', error);
@@ -68,10 +68,10 @@ function* deleteSessionSaga(action) {
       // DELETE a session
       yield axios({
         method: 'DELETE',
-        url: `/api/session/delete/${action.payload.id}`,
+        url: `/api/session/delete/${action.payload}`,
       });
       // dispatch to refresh GET
-      // yield put({ type: 'FETCH_UPCOMING_SESSION' });
+      yield put({ type: 'FETCH_UPCOMING_SESSION' });
     } catch (error) {
       // error surface to user
       console.log('ERROR:', error);

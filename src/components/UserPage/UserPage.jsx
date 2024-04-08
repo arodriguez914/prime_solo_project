@@ -19,32 +19,19 @@ function UserPage() {
     dispatch({ type: "FETCH_SUBJECTS" });
   }, []);
 
-  // function handleClickDelete(sessionId) {
-  //   if (
-  //     confirm(
-  //       `Are you sure you want to delete the event`
-  //     )
-  //   ) {
-  //     ;
-  //     dispatch({
-  //       type: "DELETE_SESSION",
-  //       payload: {
-  //         sessionId
-  //       },
-  //     });
-  //   }
-  // }
-
-  // function handleClickDelete(sessionId) {
-  //   console.log("trying to delete session: ", session.id);
-
-  //   dispatch({ type: "DELETE_SESSION", payload: sessionId });
-  // }
-
-  const handleClickDelete = (id) => {
-    console.log('SESSION TO BE DELETED ID: ', id);
-    dispatch({ type: 'DELETE_SESSION', payload: id });
+  const handleClickDelete= (sessionId) => {
+    if (
+      confirm(
+        `Are you sure you want to cancel this session?`
+      )
+    ) {
+      ; 
+    dispatch({
+      type: 'DELETE_SESSION',
+      payload: sessionId ,
+    });
   };
+}
 
   return (
     <Grid
@@ -69,10 +56,10 @@ function UserPage() {
             backgroundColor: "lightgrey",
           }}
         >
+          <section className="session">
           {!session && (
             <h3 className="dash-heading">No upcoming sessions to display</h3>
           )}
-          <section className="session">
             {session &&
               session.map((sessionItem) => {
                 <p data-testid="sessionItem" key={sessionItem.id}></p>
@@ -116,9 +103,7 @@ function UserPage() {
                       <Button variant="outlined">EDIT</Button>
                       <Button
                         variant="outlined"
-                        color="error"
-                        onClick={handleClickDelete ( sessionItem )}
-                      >
+                        onClick={() => handleClickDelete(sessionItem.id)}                      >
                         CANCEL
                       </Button>
                     </Box>

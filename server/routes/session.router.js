@@ -70,6 +70,8 @@ router.post('/schedule', (req, res) => {
 
 router.delete('/delete/:id', (req, res) => {
     const sessionId = req.params.id;
+    console.log('req.params', req.params);
+    console.log('sessionId:', sessionId);
     const queryText = `DELETE FROM "session" WHERE "id" = $1;`;
     pool
       .query(queryText, [sessionId])
