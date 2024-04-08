@@ -66,7 +66,26 @@ router.post('/schedule', (req, res) => {
     })
   })
 
-
+  router.put('/edit/:id', (req, res) => {
+    const {startDate, endDate, subject, tutor, student} = req.body;
+    const id = req.params.id;
+  
+    const dbQuery = `UPDATE session
+    SET student_id = $1, tutor_id = $2, subject_id = $3, start_datetime = $4, end_datetime = $5
+    WHERE "id" = $6;`;
+  
+    const queryValues = [student, tutor, subject, startDate, endDate, id];
+  
+    pool
+      .query(dbQuery, queryValues)
+      .then((result) => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error('Error updating users: ', error);
+        res.sendStatus(500);
+      });
+  });
 
 router.delete('/delete/:id', (req, res) => {
     const sessionId = req.params.id;
