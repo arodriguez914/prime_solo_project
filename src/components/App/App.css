@@ -5,7 +5,7 @@ body,
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   margin: 0px;
 }
 
@@ -16,9 +16,10 @@ img {
 
 footer {
   background-color: darkslateblue;
-  margin: 0;
-  
+  margin-top: 110px;
+  color: white;
   padding: 20px;
+  text-align: center;
 }
 
 .footerstyle {
@@ -119,7 +120,6 @@ Form Treatment
   padding: 40px;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.0);
-
 }
 
 .registerFormPanel {
@@ -130,7 +130,7 @@ Form Treatment
   padding: 40px;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.0);
-  flex-direction: column
+  flex-direction: column;
 }
 
 .updateFormPanel {
@@ -142,7 +142,6 @@ Form Treatment
   margin-right: 10px;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.6);
-  text-align: center;
   flex:auto
 }
 
@@ -152,14 +151,14 @@ Form Treatment
 
 .registerFormPanel {
   width: 50%;
-  flex-direction: column
+  flex-direction: column;
 }
 
 input {
   margin: 5px;
   margin-bottom: 10px;
-  flex-direction: column
-  
+  flex-direction: column;
+  display:list-item;
 }
 
 button {
@@ -174,22 +173,26 @@ Sidebar Styling
   text-align: center;
 }
 
+.drawer {
+  background-color: darkgoldenrod;
+}
 /* --------------------------------------------------------------------------------------
 Dashboard Styling
 --------------------------------------------------------------------------------------*/
 .dash-heading {
   text-align: center;
   font-weight: 700;
-  font-family: Arial, Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .sched-heading {
   font-weight: 700;
   font-family: Arial, Helvetica, sans-serif;
   margin-left: 250px;
-  margin-right: 50px;
+  margin-right: 20px;
   padding-bottom: 10px;
   padding-top: 60px;
+  color: black;
 }
 
 .schedule-items {

@@ -33,7 +33,6 @@ import { formatDate } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { INITIAL_EVENTS, createEventId } from "./event-util";
 import session, { pastSession } from "../../redux/reducers/session.reducer";
 let calendarApi;
 function SchedulePage() {
@@ -56,14 +55,14 @@ function SchedulePage() {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    console.log('in use effect');
+    console.log("in use effect");
     console.log("Past", pastSession);
     console.log("Upcoming", session);
-    dispatch({ type: "FETCH_TUTORS" })
-    dispatch({ type: "FETCH_SUBJECTS" })
-    dispatch({ type: "FETCH_STUDENTS" })
-    dispatch({ type: "FETCH_UPCOMING_SESSION" })
-    console.log('use effect not running');
+    dispatch({ type: "FETCH_TUTORS" });
+    dispatch({ type: "FETCH_SUBJECTS" });
+    dispatch({ type: "FETCH_STUDENTS" });
+    dispatch({ type: "FETCH_UPCOMING_SESSION" });
+    console.log("use effect not running");
   }, []);
 
   // CALENDAR EVENTS STARTING HERE
@@ -118,11 +117,11 @@ function SchedulePage() {
       dispatch({
         type: "DELETE_SESSION",
         payload: {
-        startDate: startDate,
-        endDate: endDate,
-        student: student,
-        tutor: tutor,
-        subject: subject,
+          startDate: startDate,
+          endDate: endDate,
+          student: student,
+          tutor: tutor,
+          subject: subject,
         },
       });
     }
@@ -231,7 +230,6 @@ function SchedulePage() {
           selectMirror={true}
           dayMaxEvents={true}
           weekends={weekendsVisible}
-          initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
           select={handleDateSelect}
           eventContent={renderEventContent} // custom render function
           eventClick={handleEventClick}
@@ -248,9 +246,7 @@ function SchedulePage() {
 function renderEventContent(eventInfo) {
   return (
     <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
-      <i>{pastSession.start_datetime}</i>
+      <i>{eventInfo.session.startDate}</i>
     </>
   );
 }

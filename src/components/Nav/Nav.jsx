@@ -14,7 +14,7 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
-import Typography  from "@mui/material/styles/createTypography";
+import Typography from "@mui/material/styles/createTypography";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -66,19 +66,22 @@ function Nav(props) {
                   "& .MuiDrawer-paper": {
                     width: drawerWidth,
                     boxSizing: "border-box",
+                    backgroundColor: "darkslateblue",
+                    color: "white"
                   },
                 }}
-                variant="permanent"
-                anchor="left"
+                  variant="permanent"
+                  anchor="top"
+                className="drawer"
               >
                 <Toolbar />
                 <div className="profileIcon">
                   {<AccountCircleRoundedIcon fontSize="large" />}
                 </div>
                 <Divider />
-                <List>
+                <List className="icons">
                   <ListItemButton onClick={() => history.push("/user")}>
-                    <ListItemIcon>
+                    <ListItemIcon >
                       {<HomeRoundedIcon fontSize="medium" />}
                     </ListItemIcon>
                     <ListItem>Home</ListItem>
@@ -108,13 +111,14 @@ function Nav(props) {
                 <Divider />
                 <div className="logOutSidebar">
                   <List>
-                  
-                    <ListItemButton onClick={() => dispatch({ type: "LOGOUT" })}>
-                    <ListItemIcon>
-                      {<ExitToAppRoundedIcon fontSize="medium" />}
-                    </ListItemIcon>
-                    <ListItem>Log Out</ListItem>
-                  </ListItemButton>
+                    <ListItemButton
+                      onClick={() => dispatch({ type: "LOGOUT" })}
+                    >
+                      <ListItemIcon>
+                        {<ExitToAppRoundedIcon fontSize="medium" />}
+                      </ListItemIcon>
+                      <ListItem>Log Out</ListItem>
+                    </ListItemButton>
                   </List>
                 </div>
               </Drawer>

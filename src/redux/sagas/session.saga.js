@@ -50,11 +50,11 @@ function* postSessionSaga(action) {
     // try catch block
     try {
       // code to try running HERE
-      const sessionResponse = yield axios({
+    yield axios({
         method: 'PUT',
-        url: `/api/session/${action.payload.id}`,
-        data: { id: action.payload },
+        url: `/api/session/edit/${action.payload}`,
       });
+      yield put({ type: 'FETCH_UPCOMING_SESSION' });
       // yield put({ type: 'SET_SESSION', payload: sessionResponse.data });
     } catch (error) {
       console.log('ERROR:', error)    

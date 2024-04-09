@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function UpdateProfilePage() {
@@ -10,9 +10,16 @@ function UpdateProfilePage() {
   const [parentEmail, setParentEmail] = useState("");
   const [parentPhone, setParentPhone] = useState("");
   const [gradesTaught, setGradesTaught] = useState("");
+  const students = useSelector((store) => store.students);
+  const tutors = useSelector((store) => store.tutors);
   const [about, setAbout] = useState("");
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_TUTORS" });
+    dispatch({ type: "FETCH_STUDENTS" });
+  }, []);
 
   const updateUser = (event) => {
     event.preventDefault();
@@ -32,6 +39,7 @@ function UpdateProfilePage() {
       },
     });
   }; // end updateUser
+
 
   return (
     <form className="updateFormPanel" onSubmit={updateUser}>
@@ -61,7 +69,7 @@ function UpdateProfilePage() {
                 <input
                   type="parentName"
                   name="parentName"
-                  //   placeholder
+                  placeholder={students.parent_name}
                   required
                   onChange={(event) => setParentName(event.target.value)}
                 />
@@ -73,7 +81,7 @@ function UpdateProfilePage() {
                 <input
                   type="parentEmail"
                   name="parentEmail"
-                  // placeholder={user.parentEmail}
+                  placeholder={students.parent_email}
                   required
                   onChange={(event) => setParentEmail(event.target.value)}
                 />
