@@ -1,4 +1,4 @@
-export const students = (state = {}, action) => {
+export const students = (state = [], action) => {
     switch (action.type) {
       case 'SET_STUDENTS':
         return action.payload;
