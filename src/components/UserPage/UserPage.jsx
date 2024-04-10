@@ -74,8 +74,8 @@ function UserPage() {
           student: student,
           tutor: tutor,
           subject: subject,
-          startDate: startDate || "",
-          endDate: endDate || "",
+          // startDate: startDate || "",
+          // endDate: endDate || "",
           sessionId
         },
       });
