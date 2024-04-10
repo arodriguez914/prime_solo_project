@@ -164,6 +164,16 @@ input {
   margin-bottom: 10px;
   flex-direction: column;
   display:list-item;
+  word-wrap: break-word; 
+}
+
+.commentBox {
+  width: 500px;
+  padding: 5px 5px 280px 5px;
+  overflow-wrap: break-word;  
+    word-wrap: break-word; 
+    word-break: break-word;
+    break-after: always;
 }
 
 button {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function UpdateProfilePage() {
@@ -20,6 +20,32 @@ function UpdateProfilePage() {
     dispatch({ type: "FETCH_TUTORS" });
     dispatch({ type: "FETCH_STUDENTS" });
   }, []);
+  
+  if (user.is_student === true) {
+  useEffect(() => {
+    if (user.id && students.length > 0) {
+      const matchedStudent = students.filter((studentItem) => {
+        return studentItem.user_id === user.id;
+      });
+      setName(matchedStudent[0].name)
+      setParentName(matchedStudent[0].parent_name);
+      setParentEmail(matchedStudent[0].parent_email);
+      setParentPhone(matchedStudent[0].parent_number);
+      setComments(matchedStudent[0].comments);
+    }
+  }, [students, user]);
+} else {
+  console.log('in use' );
+   useEffect(() => {
+      if (user.id && tutors.length > 0) {
+        const matchedTutor = tutors.filter((tutorItem) => {
+          return tutorItem.user_id === user.id;
+        });
+        setName(matchedTutor[0].full_name)
+        setGradesTaught(matchedTutor[0].grades_taught);
+        setAbout(matchedTutor[0].about);
+      }
+    }, [tutors, user]);}
 
   const updateUser = (event) => {
     event.preventDefault();
@@ -40,36 +66,47 @@ function UpdateProfilePage() {
     });
   }; // end updateUser
 
-
   return (
     <form className="updateFormPanel" onSubmit={updateUser}>
       <div>
         <h2>
           <u>Update Profile </u>
         </h2>
-        <div>
+        {/* <div>
           <label htmlFor="name">
             Your Full Name:
             <input
               type="name"
               name="name"
-              placeholder={user.full_name}
-              required
+              value={tutors.full_name}
+              onChange={(event) => {
+                setName(event.target.value);
+              }}
+            />
+          </label>
+        </div> */}
+        {user.is_student ? (
+          <>
+          <div>
+          <label htmlFor="name">
+            Your Full Name:
+            <input
+              type="name"
+              name="name"
+              value={name}
               onChange={(event) => {
                 setName(event.target.value);
               }}
             />
           </label>
         </div>
-        {user.is_student ? (
-          <>
             <div>
               <label htmlFor="parentName">
                 Parent's Name:
                 <input
                   type="parentName"
                   name="parentName"
-                  placeholder={students.parent_name}
+                  value={parentName}
                   required
                   onChange={(event) => setParentName(event.target.value)}
                 />
@@ -81,7 +118,7 @@ function UpdateProfilePage() {
                 <input
                   type="parentEmail"
                   name="parentEmail"
-                  placeholder={students.parent_email}
+                  value={parentEmail}
                   required
                   onChange={(event) => setParentEmail(event.target.value)}
                 />
@@ -93,7 +130,7 @@ function UpdateProfilePage() {
                 <input
                   type="parentPhone"
                   name="parentPhone"
-                  // placeholder={user.comments}
+                  value={parentPhone}
                   required
                   onChange={(event) => setParentPhone(event.target.value)}
                 />
@@ -103,9 +140,9 @@ function UpdateProfilePage() {
               <label htmlFor="comments">
                 Comments/Additional Informational for Tutor
                 <input
+                  className="commentBox"
                   type="comments"
                   name="comments"
-                  // placeholder={user.gradesTaught}
                   required
                   onChange={(event) => setComments(event.target.value)}
                 />
@@ -114,13 +151,26 @@ function UpdateProfilePage() {
           </>
         ) : (
           <>
+          <div>
+          <label htmlFor="name">
+            Your Full Name:
+            <input
+              type="name"
+              name="name"
+              value={name}
+              onChange={(event) => {
+                setName(event.target.value);
+              }}
+            />
+          </label>
+        </div>
             <div>
               <label htmlFor="gradesTaught">
                 Grades Taught
                 <input
                   type="gradesTaught"
                   name="gradesTaught"
-                  // placeholder={user.gradesTaught}
+                  value={gradesTaught}
                   required
                   onChange={(event) => setGradesTaught(event.target.value)}
                 />
@@ -129,10 +179,11 @@ function UpdateProfilePage() {
             <div>
               <label htmlFor="about">
                 About You
-                <input
+                <input 
+                  className="commentBox"
                   type="about"
                   name="about"
-                  // placeholder={user.about}
+                  value={about}
                   required
                   onChange={(event) => setAbout(event.target.value)}
                 />

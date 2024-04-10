@@ -10,15 +10,15 @@ const {
 /**
  * GET route template set up by id
  */
-router.get('/upcoming', (req, res) => {
+router.get('/upcoming', rejectUnauthenticated, (req, res) => {
     // console.log('GET /api/session/upcoming');
     pool
       .query(`SELECT session.*, "user"."full_name", "tutor"."full_name", "subject"."subject_name" FROM "session"
       JOIN "user" ON "session"."student_id" = "user"."id"
       JOIN "tutor" ON "session"."tutor_id" = "tutor"."id"
       JOIN "subject" ON "session"."subject_id" = "subject"."id"
-      WHERE "start_datetime" > CURRENT_TIMESTAMP
-      ORDER BY "session"."start_datetime";`)
+      WHERE "start_datetime" > CURRENT_TIMESTAMP AND "user"."id" = $1
+      ORDER BY "session"."start_datetime";`, [req.user.id])
       .then((result) => {
         res.send(result.rows);
       })
@@ -28,15 +28,15 @@ router.get('/upcoming', (req, res) => {
       });
   });
 
-  router.get('/past', (req, res) => {
+  router.get('/past', rejectUnauthenticated, (req, res) => {
     // console.log('GET /api/session');
     pool
       .query(`SELECT session.*, "user"."full_name", "tutor"."full_name", "subject"."subject_name" FROM "session"
       JOIN "user" ON "session"."student_id" = "user"."id"
       JOIN "tutor" ON "session"."tutor_id" = "tutor"."id"
       JOIN "subject" ON "session"."subject_id" = "subject"."id"
-      WHERE "start_datetime" < CURRENT_TIMESTAMP
-      ORDER BY "session"."start_datetime";`)
+      WHERE "start_datetime" < CURRENT_TIMESTAMP AND "user"."id" = $1
+      ORDER BY "session"."start_datetime";`, [req.user.id])
       .then((result) => {
         res.send(result.rows);
         console.log('Past GET is:', result.rows); 
@@ -49,7 +49,7 @@ router.get('/upcoming', (req, res) => {
 /**
  * POST route template 
  */
-router.post('/schedule', (req, res) => {
+router.post('/schedule', rejectUnauthenticated, (req, res) => {
   console.log(req.body);
     const {startDate, endDate, subject, tutor, student} = req.body;
     const queryText = `INSERT INTO "session" ("student_id", "tutor_id", "subject_id", "start_datetime", "end_datetime")
@@ -66,16 +66,16 @@ router.post('/schedule', (req, res) => {
     })
   })
 
-router.put('/edit/:id', (req, res) => {
+router.put('/edit/:id', rejectUnauthenticated, (req, res) => {
     const {startDate, endDate, subject, tutor, student} = req.body;
     const sessionId = req.params.id;
   
     const dbQuery = `UPDATE "session"
-    SET "student_id" = $1, "tutor_id" = $2, "subject_id" = $3, "start_datetime" = $4, "end_datetime" = $5
-    WHERE "id" = $6;`;
+    SET "student_id" = $1, "tutor_id" = $2, "subject_id" = $3
+    WHERE "id" = $4;`;
     
     pool
-      .query(dbQuery, [student, tutor, subject, startDate, endDate, sessionId])
+      .query(dbQuery, [student, tutor, subject, sessionId])
       .then((result) => {
         res.sendStatus(200);
       })
@@ -85,7 +85,7 @@ router.put('/edit/:id', (req, res) => {
       });
   });
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', rejectUnauthenticated, (req, res) => {
     const sessionId = req.params.id;
     console.log('req.params', req.params);
     console.log('sessionId:', sessionId);

@@ -68,7 +68,6 @@ function UserPage() {
   }
 
   const handleClickEditSubmit = (sessionId) => {
-    {
       dispatch({
         type: "PUT_SESSION",
         payload: {
@@ -80,7 +79,7 @@ function UserPage() {
           sessionId
         },
       });
-    }
+      setOpen(false);
   };
 
   function handleSelectChange(event) {

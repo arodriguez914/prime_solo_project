@@ -53,6 +53,7 @@ function SchedulePage() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     console.log("in use effect");
@@ -64,6 +65,16 @@ function SchedulePage() {
     dispatch({ type: "FETCH_UPCOMING_SESSION" });
     console.log("use effect not running");
   }, []);
+
+  useEffect(() => {
+    setEvents(
+      session.map((item) => ({
+        title: item.full_name,
+        date: item.start_datetime,
+      }))
+    );
+  }, [session]);
+
 
   // CALENDAR EVENTS STARTING HERE
   const [weekendsVisible, setWeekendsVisible] = useState(true);
@@ -116,13 +127,8 @@ function SchedulePage() {
       clickInfo.event.remove();
       dispatch({
         type: "DELETE_SESSION",
-        payload: {
-          startDate: startDate,
-          endDate: endDate,
-          student: student,
-          tutor: tutor,
-          subject: subject,
-        },
+        payload: 
+          session.id
       });
     }
   }
@@ -231,7 +237,8 @@ function SchedulePage() {
           dayMaxEvents={true}
           weekends={weekendsVisible}
           select={handleDateSelect}
-          eventContent={renderEventContent} // custom render function
+          events={events}
+          // eventContent={renderEventContent} // custom render function
           eventClick={handleEventClick}
           eventsSet={handleEvents} // called after events are initialized/added/changed/removed
           eventAdd={addEvent}
@@ -246,7 +253,7 @@ function SchedulePage() {
 function renderEventContent(eventInfo) {
   return (
     <>
-      <i>{eventInfo.session.startDate}</i>
+      <i>{eventInfo.session?.startDate}</i>
     </>
   );
 }

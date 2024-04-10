@@ -52,7 +52,8 @@ function* postSessionSaga(action) {
       // code to try running HERE
     yield axios({
         method: 'PUT',
-        url: `/api/session/edit/${action.payload}`,
+        url: `/api/session/edit/${action.payload.sessionId}`,
+        data: action.payload
       });
       yield put({ type: 'FETCH_UPCOMING_SESSION' });
       // yield put({ type: 'SET_SESSION', payload: sessionResponse.data });

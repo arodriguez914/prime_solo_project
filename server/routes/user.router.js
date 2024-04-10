@@ -69,7 +69,7 @@ router.post('/register', (req, res, next) => {
   })
 })
 
-router.put('/update/:id', (req, res, next) => {
+router.put('/update/:id', rejectUnauthenticated, (req, res, next) => {
   const { id, img, full_name, is_student, parentName, parentEmail, parentPhone, gradesTaught, about, comments, user_id} = req.body
   let profileId = req.params.id;
   console.log('Params', profileId);

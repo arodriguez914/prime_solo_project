@@ -6,6 +6,7 @@ function* updateUser(action) {
   console.log('In update user', action.payload.id);
   try {
     yield axios.put(`/api/user/update/${action.payload.id}`, action.payload);
+    yield put ({type: 'FETCH_USER'});
   } catch (error) {
     console.log('Error with user update:', error);
     yield put({ type: 'UPDATE_FAILED' });
