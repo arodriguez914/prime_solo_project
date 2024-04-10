@@ -136,14 +136,13 @@ function UpdateProfilePage() {
                 />
               </label>
             </div>
-            <div>
+            <div className="wrap">
               <label htmlFor="comments">
                 Comments/Additional Informational for Tutor
                 <input
-                  className="commentBox"
                   type="comments"
                   name="comments"
-                  required
+                  value={comments}
                   onChange={(event) => setComments(event.target.value)}
                 />
               </label>
@@ -176,11 +175,10 @@ function UpdateProfilePage() {
                 />
               </label>
             </div>
-            <div>
+            <p className="wrap">
               <label htmlFor="about">
                 About You
                 <input 
-                  className="commentBox"
                   type="about"
                   name="about"
                   value={about}
@@ -188,7 +186,7 @@ function UpdateProfilePage() {
                   onChange={(event) => setAbout(event.target.value)}
                 />
               </label>
-            </div>
+            </p>
           </>
         )}
         <input

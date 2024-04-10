@@ -164,16 +164,14 @@ input {
   margin-bottom: 10px;
   flex-direction: column;
   display:list-item;
-  word-wrap: break-word; 
 }
 
-.commentBox {
+.wrap input {
+  flex-direction: column;
   width: 500px;
-  padding: 5px 5px 280px 5px;
-  overflow-wrap: break-word;  
-    word-wrap: break-word; 
-    word-break: break-word;
-    break-after: always;
+  padding: 5px 5px 200px 5px;  
+  text-wrap: wrap;
+  word-wrap: break-word;
 }
 
 button {

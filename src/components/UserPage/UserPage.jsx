@@ -68,18 +68,18 @@ function UserPage() {
   }
 
   const handleClickEditSubmit = (sessionId) => {
-      dispatch({
-        type: "PUT_SESSION",
-        payload: {
-          student: student,
-          tutor: tutor,
-          subject: subject,
-          // startDate: startDate || "",
-          // endDate: endDate || "",
-          sessionId
-        },
-      });
-      setOpen(false);
+    dispatch({
+      type: "PUT_SESSION",
+      payload: {
+        student: student,
+        tutor: tutor,
+        subject: subject,
+        // startDate: startDate || "",
+        // endDate: endDate || "",
+        sessionId,
+      },
+    });
+    setOpen(false);
   };
 
   function handleSelectChange(event) {
@@ -157,6 +157,7 @@ function UserPage() {
                       <p sx={{ "& button": { m: 1 } }}>
                         {sessionItem.end_datetime}
                       </p>
+
                       <Button
                         variant="outlined"
                         onClick={() => handleClickEdit(sessionItem.id)}
@@ -239,7 +240,10 @@ function UserPage() {
                             </FormControl>
                           </Typography>
                           <Button onClick={handleCancel}>Cancel</Button>
-                          <Button onClick={() => handleClickEditSubmit(sessionItem.id)}
+                          <Button
+                            onClick={() =>
+                              handleClickEditSubmit(sessionItem.id)
+                            }
                           >
                             Submit
                           </Button>
@@ -249,6 +253,7 @@ function UserPage() {
                       <Button
                         variant="outlined"
                         onClick={() => handleClickDelete(sessionItem.id)}
+                        color="error"
                       >
                         CANCEL
                       </Button>
